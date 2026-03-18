@@ -1,1 +1,0 @@
-# InalaDiagnostics.github.io

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOSR — Pricing & Engagement Models — Inala Financial Diagnostics</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: A4; margin: 0; }
+
+:root {
+  --navy:   #0E1B2E;
+  --forest: #152E20;
+  --copper: #B5662E;
+  --gold:   #C9A44A;
+  --paper:  #F7F3EE;
+  --white:  #FDFCFA;
+  --ink:    #0E0D0B;
+  --mid:    #28261F;
+  --dim:    #58524A;
+  --faint:  #8A8278;
+  --rule:   #D6CFC5;
+  --rlt:    #EAE4DC;
+  --green:  #267A52;
+  --serif:  'Cormorant Garamond', Georgia, serif;
+  --sans:   'DM Sans', sans-serif;
+}
+
+body { font-family: var(--sans); background: #D0CBC4; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.page { width: 210mm; min-height: 297mm; margin: 0 auto; background: white; display: flex; flex-direction: column; box-shadow: 0 2px 24px rgba(0,0,0,0.14); }
+
+/* ── Header ── */
+.header { background: var(--navy); padding: 18px 32px 14px; border-bottom: 3px solid var(--gold); display: flex; justify-content: space-between; align-items: flex-end; }
+.h-ey   { font-size: 6pt; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(201,164,74,0.55); margin-bottom: 4px; }
+.h-title { font-family: var(--serif); font-size: 17pt; font-weight: 300; color: white; line-height: 1.1; }
+.h-title em { color: var(--gold); font-style: italic; }
+.h-right { text-align: right; font-size: 6.5pt; color: rgba(255,255,255,0.22); line-height: 1.9; }
+
+/* ── Hook ── */
+.hook { background: var(--forest); padding: 8px 32px; display: flex; align-items: center; gap: 10px; }
+.hook-bar { width: 2px; height: 24px; background: var(--gold); flex-shrink: 0; }
+.hook-text { font-size: 7.5pt; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.hook-text em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+/* ── Body ── */
+.body { flex: 1; padding: 16px 32px 12px; display: flex; flex-direction: column; gap: 13px; }
+
+/* ── Section headers ── */
+.sh { font-size: 6pt; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.sh::before { content: ''; width: 12px; height: 1px; flex-shrink: 0; }
+.sh::after  { content: ''; flex: 1; height: 1px; opacity: 0.18; }
+.sh-cu { color: var(--copper); } .sh-cu::before, .sh-cu::after { background: var(--copper); }
+.sh-nv { color: var(--navy);   } .sh-nv::before, .sh-nv::after { background: var(--navy); }
+.sh-fo { color: var(--forest); } .sh-fo::before, .sh-fo::after { background: var(--forest); }
+.sh-go { color: #8A6520; }      .sh-go::before, .sh-go::after { background: #8A6520; }
+
+/* ── Anchored Pilot ── */
+.pilot { border: 1px solid var(--rlt); border-top: 3px solid var(--copper); padding: 11px 14px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.pilot-left { flex: 1; }
+.pilot-label { font-size: 6pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper); margin-bottom: 3px; }
+.pilot-name  { font-family: var(--serif); font-size: 13pt; font-weight: 300; color: var(--ink); margin-bottom: 2px; line-height: 1.15; }
+.pilot-note  { font-size: 7pt; color: var(--dim); font-weight: 300; line-height: 1.55; margin-bottom: 5px; }
+.pilot-mec   { background: rgba(181,102,46,0.07); border: 1px solid rgba(181,102,46,0.18); padding: 6px 10px; font-size: 7pt; color: rgba(181,102,46,0.85); line-height: 1.55; }
+.pilot-mec strong { font-weight: 600; }
+.pilot-right { text-align: right; flex-shrink: 0; }
+.pilot-price { font-family: var(--serif); font-size: 20pt; font-weight: 300; color: var(--copper); line-height: 1; }
+.pilot-pnote { font-size: 6.5pt; color: var(--faint); font-weight: 300; margin-top: 2px; margin-bottom: 8px; }
+.pilot-inc   { font-size: 6.5pt; color: var(--dim); line-height: 1.65; font-weight: 300; }
+
+/* ── Product cards ── */
+.products { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.product { border: 1px solid var(--rlt); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.p-full { grid-column: 1 / -1; }
+.product::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.p-cohort::before   { background: #2A6494; }
+.p-partner::before  { background: var(--gold); }
+.p-inst::before     { background: var(--forest); }
+.p-dfi::before      { background: var(--copper); }
+.p-fellow::before   { background: var(--gold); }
+
+.p-cohort  { --accent: #2A6494; }
+.p-partner { --accent: #8A6520; background: var(--navy); }
+.p-inst    { --accent: #267A52; background: #EAF7F2; }
+.p-dfi     { --accent: #B5662E; }
+.p-fellow  { --accent: #8A6520; background: #F5EDD8; }
+
+.p-header { padding: 10px 13px 8px; border-bottom: 1px solid var(--rlt); }
+.p-partner .p-header { border-bottom-color: rgba(255,255,255,0.07); }
+.p-inst    .p-header { border-bottom-color: rgba(38,122,82,0.2); }
+
+.p-label { font-size: 6pt; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 3px; color: var(--accent); }
+.p-partner .p-label { color: var(--gold); }
+
+.p-name { font-family: var(--serif); font-size: 14pt; font-weight: 300; color: var(--ink); line-height: 1.1; margin-bottom: 2px; }
+.p-partner .p-name { color: white; }
+.p-inst    .p-name { color: var(--forest); }
+
+.p-price { font-family: var(--serif); font-size: 20pt; font-weight: 300; color: var(--accent); line-height: 1; }
+.p-partner .p-price { color: var(--gold); }
+.p-inst    .p-price { color: var(--forest); }
+
+.p-price-note { font-size: 6.5pt; color: var(--faint); font-weight: 300; margin-top: 2px; }
+.p-partner .p-price-note { color: rgba(255,255,255,0.3); }
+.p-inst    .p-price-note { color: #4A8A6A; }
+
+.p-body { padding: 9px 13px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.p-for  { font-size: 6pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.p-partner .p-for { color: rgba(201,164,74,0.55); }
+.p-inst    .p-for { color: #267A52; }
+
+.p-desc { font-size: 7pt; color: var(--dim); line-height: 1.55; font-weight: 300; }
+.p-partner .p-desc { color: rgba(255,255,255,0.48); }
+.p-inst    .p-desc { color: #3A6050; }
+
+.p-includes { display: flex; flex-direction: column; gap: 3px; margin-top: 2px; }
+.p-inc { font-size: 6.5pt; color: var(--dim); line-height: 1.4; font-weight: 300; display: flex; gap: 5px; }
+.p-partner .p-inc { color: rgba(255,255,255,0.6); }
+.p-inst    .p-inc { color: #3A6050; }
+.p-inc::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; font-size: 7pt; }
+.p-partner .p-inc::before { color: var(--gold); }
+.p-inst    .p-inc::before { color: var(--forest); }
+
+.p-mec { margin-top: 6px; padding: 6px 9px; font-size: 6.5pt; line-height: 1.5; font-weight: 300; border-radius: 1px; }
+.p-cohort  .p-mec { background: rgba(42,100,148,0.06);  border: 1px solid rgba(42,100,148,0.14);  color: #2A6494; }
+.p-partner .p-mec { background: rgba(201,164,74,0.08);  border: 1px solid rgba(201,164,74,0.2);   color: #E8C97A; }
+.p-inst    .p-mec { background: rgba(38,122,82,0.08);   border: 1px solid rgba(38,122,82,0.2);    color: #1A6B40; }
+.p-dfi     .p-mec { background: rgba(181,102,46,0.06);  border: 1px solid rgba(181,102,46,0.16);  color: var(--copper); }
+.p-mec strong { font-weight: 600; }
+
+.p-tag { display: inline-block; padding: 2px 7px; font-size: 5.5pt; font-weight: 700; border-radius: 2px; margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+.tag-pop  { background: var(--gold);   color: var(--forest); }
+.tag-inst { background: var(--forest); color: var(--gold); }
+
+/* ── Comparison table ── */
+.comp { width: 100%; border-collapse: collapse; font-size: 7pt; }
+.comp th { padding: 6px 9px; text-align: center; font-size: 6pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.comp th:first-child { text-align: left; background: var(--paper); color: var(--faint); }
+.comp th.h-co { background: #EAF2FB; color: #2A6494; }
+.comp th.h-pa { background: var(--navy); color: var(--gold); }
+.comp th.h-in { background: var(--forest); color: var(--gold); }
+.comp th.h-df { background: #FBF0EB; color: var(--copper); }
+.comp td { padding: 5px 9px; border-bottom: 1px solid var(--rlt); color: var(--dim); text-align: center; line-height: 1.4; }
+.comp td:first-child { text-align: left; font-weight: 500; color: var(--mid); background: var(--paper); }
+.comp tr:last-child td { border-bottom: none; }
+.comp tr:nth-child(even) td:not(:first-child) { background: rgba(0,0,0,0.012); }
+.ch { color: var(--green); font-weight: 700; font-size: 8.5pt; }
+.cx { color: var(--rlt);   font-weight: 700; font-size: 8.5pt; }
+.co { font-size: 6.5pt; color: var(--faint); }
+
+/* ── Footer ── */
+.footer { background: #080F18; padding: 8px 32px; display: flex; justify-content: space-between; align-items: center; }
+.f-l { font-size: 6pt; color: rgba(255,255,255,0.16); }
+.f-r { font-size: 6pt; color: rgba(255,255,255,0.1); text-align: right; line-height: 1.8; }
+
+@media print { body { background: white; } .page { box-shadow: none; width: 100%; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="h-ey">Inala Financial Diagnostics · Decision Gate Framework · Commercial</div>
+      <div class="h-title">FOSR — Pricing &amp; <em>Engagement Models</em></div>
+    </div>
+    <div class="h-right">
+      Inala Advisory (Pty) Ltd<br>
+      inaladiagnostics.github.io<br>
+      +27 63 714 8225
+    </div>
+  </div>
+
+  <!-- HOOK -->
+  <div class="hook">
+    <div class="hook-bar"></div>
+    <div class="hook-text">
+      Five engagement models — from a single cohort pilot to an institutional annual licence and corporate fellowship deployments. <em>Every model includes full report production by Inala.</em> Your organisation receives the outputs. We carry the operational load.
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- ANCHORED PILOT -->
+    <div>
+      <div class="sh sh-cu">Anchored Pilot · First engagement · Any context</div>
+      <div class="pilot">
+        <div class="pilot-left">
+          <div class="pilot-label">Entry model — credited on conversion</div>
+          <div class="pilot-name">One cohort intake.<br>A structural map before you commit.</div>
+          <div class="pilot-note">Score an upcoming intake with FOSR. Each participant receives a Curriculum Signal Output. Your team receives a Cohort Benchmark Report and a 90-minute analyst debrief — walking through the structural profile of your cohort and what it means for how you sequence delivery. The pilot answers one question: <em>what does this cohort actually look like structurally?</em> If the answer changes how you work, the full pilot fee is credited toward the next engagement.</div>
+          <div class="pilot-mec"><strong>Mentorship Efficiency Credit:</strong> A single pilot cohort typically saves 20–30 hours of diagnostic contact time — more than recovering the pilot cost before the debrief session ends.</div>
+        </div>
+        <div class="pilot-right">
+          <div class="pilot-price">R19,500</div>
+          <div class="pilot-pnote">Up to 10 participants · Credited on conversion</div>
+          <div class="pilot-inc">
+            Individual Curriculum Signal Output ✓<br>
+            Cohort Benchmark Report ✓<br>
+            Analyst debrief session (90 min) ✓<br>
+            5 business day turnaround ✓
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOUR MAIN MODELS -->
+    <div>
+      <div class="sh sh-nv">Engagement models — programmes, institutions, and lenders</div>
+      <div class="products">
+
+        <!-- MODEL 1: COHORT ASSESSMENT -->
+        <div class="product p-cohort">
+          <div class="p-header">
+            <div class="p-label">Model 1 · Cohort Assessment</div>
+            <div class="p-name">Single cohort.<br>Full structural picture.</div>
+            <div class="p-price">R65,000</div>
+            <div class="p-price-note">Up to 20 participants · R2,800/participant above 20</div>
+          </div>
+          <div class="p-body">
+            <div class="p-for">Programmes &amp; accelerators — single cohort intake</div>
+            <div class="p-desc">The complete FOSR deployment for one cohort. Every participant receives a personal Curriculum Signal Output. The programme receives a Cohort Benchmark Report before day one and a Score Shift Report at exit.</div>
+            <div class="p-includes">
+              <div class="p-inc">Individual Curriculum Signal Output per participant</div>
+              <div class="p-inc">Cohort Benchmark Report before day one</div>
+              <div class="p-inc">Analyst debrief session (90 min)</div>
+              <div class="p-inc">Exit re-assessment and Score Shift Report</div>
+              <div class="p-inc">5 business day turnaround</div>
+            </div>
+            <div class="p-mec"><strong>MEC:</strong> Reduces diagnostic contact time by 3–5 hours per participant — saving an estimated R45,000–R75,000 in equivalent mentor time for a 20-person cohort.</div>
+          </div>
+        </div>
+
+        <!-- MODEL 2: PROGRAMME PARTNERSHIP -->
+        <div class="product p-partner">
+          <div class="p-header">
+            <div class="p-label">Model 2 · Programme Partnership</div>
+            <div class="p-name">Annual partnership.<br>Every cohort, all year.</div>
+            <div class="p-price">R120,000</div>
+            <div class="p-price-note">Per year · Up to 50 participants across cohorts</div>
+            <span class="p-tag tag-pop">Most chosen</span>
+          </div>
+          <div class="p-body">
+            <div class="p-for">Programmes running multiple cohorts per year</div>
+            <div class="p-desc">FOSR deployed across every cohort intake for the full year. Priority turnaround. Two analyst debrief sessions. Annual sector benchmark report — the first structural capacity dataset for your sector.</div>
+            <div class="p-includes">
+              <div class="p-inc">All Model 1 outputs for every cohort</div>
+              <div class="p-inc">Priority 3-day report turnaround</div>
+              <div class="p-inc">Two analyst debrief sessions per year</div>
+              <div class="p-inc">Annual sector benchmark report (anonymised)</div>
+              <div class="p-inc">R2,000/participant above 50</div>
+            </div>
+            <div class="p-mec"><strong>MEC:</strong> Partnership clients recover the full annual licence through contact time savings within the first cohort. Year two builds the longitudinal benchmark no other instrument produces.</div>
+          </div>
+        </div>
+
+        <!-- MODEL 3: INSTITUTIONAL PACKAGE -->
+        <div class="product p-inst">
+          <div class="p-header">
+            <div class="p-label">Model 3 · Institutional Package</div>
+            <div class="p-name">Pre-diagnostic.<br>Module navigation. API-integrated.</div>
+            <div class="p-price">From R3,500</div>
+            <div class="p-price-note">Per participant · Min. 30 · Setup R15,000 once-off</div>
+            <span class="p-tag tag-inst">Institutional</span>
+          </div>
+          <div class="p-body">
+            <div class="p-for">Universities · structured online &amp; blended learning · global programme deployments</div>
+            <div class="p-desc">FOSR deployed before enrolment begins — so every participant knows which module to open first. Includes live API feed to the institution's LMS or management portal, real-time cohort dashboard, and the before-and-after evidence global funders require for impact reporting.</div>
+            <div class="p-includes">
+              <div class="p-inc">Module Navigation Signal per participant</div>
+              <div class="p-inc">Cohort structural map before orientation</div>
+              <div class="p-inc">Live API feed to institution LMS or portal</div>
+              <div class="p-inc">Real-time cohort risk flag dashboard</div>
+              <div class="p-inc">Score Shift Report for global funder reporting</div>
+              <div class="p-inc">B-BBEE skills development evidence package</div>
+              <div class="p-inc">Dashboard licence: R12,500 p.a. · Impact Report: R25,000/cohort</div>
+            </div>
+            <div class="p-mec"><strong>MEC:</strong> Eliminates the discovery phase that absorbs the first 2–3 facilitated sessions. Every contact hour begins at the right structural level. For a 50-participant cohort, savings typically exceed R60,000–R90,000 before the first session opens.</div>
+          </div>
+        </div>
+
+        <!-- MODEL 4: DFI ASSESSMENT -->
+        <div class="product p-dfi">
+          <div class="p-header">
+            <div class="p-label">Model 4 · DFI Assessment</div>
+            <div class="p-name">Individual depth.<br>Deployment readiness.</div>
+            <div class="p-price">R6,500</div>
+            <div class="p-price-note">Per applicant · Volume pricing from 50+ applicants/year</div>
+          </div>
+          <div class="p-body">
+            <div class="p-for">DFIs &amp; impact lenders — individual applicant assessment</div>
+            <div class="p-desc">Full structural capacity assessment per applicant with document verification on key items. Produces a Deployment Readiness Rating (DR-1 through DR-5) for credit committee use. Audit trail included. Answers the question financial statements cannot.</div>
+            <div class="p-includes">
+              <div class="p-inc">Full Curriculum Signal Output per applicant</div>
+              <div class="p-inc">Deployment Readiness Rating (DR-1 to DR-5)</div>
+              <div class="p-inc">Document verification on 4 key items</div>
+              <div class="p-inc">Full audit trail for credit committee</div>
+              <div class="p-inc">Volume pricing: R5,000/applicant from 50+/year</div>
+            </div>
+            <div class="p-mec"><strong>MEC:</strong> Replaces 3–5 hours of manual analyst discovery per applicant with a 20-minute automated assessment — reducing pre-disbursement cost-to-serve at scale.</div>
+          </div>
+        </div>
+
+        <!-- MODEL 5: CORPORATE FELLOWSHIP -->
+        <div class="product p-fellow p-full">
+          <div class="p-header">
+            <div class="p-label">Model 5 · Corporate Fellowship &amp; Foundation Programme</div>
+            <div class="p-name">Fellowship readiness at intake. Structural impact evidence at exit. ESG-reportable.</div>
+            <div class="p-price">R8,500</div>
+            <div class="p-price-note">Per fellow · Full engagement (intake + exit + ESG impact statement) · Min. 20 fellows · Setup R15,000 once-off · Volume: R7,500/fellow from 100+</div>
+          </div>
+          <div class="p-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <div class="p-for">Corporate sponsors · foundations · pan-African and multi-market fellowship programmes</div>
+              <div class="p-desc">Analyst-written reports for every fellow — intake and exit. Fellows receive a personal Curriculum Signal Output with a bespoke pattern statement specific to their business. The corporate sponsor receives a cohort structural map and — at programme exit — a Score Shift Report with an analyst-written ESG Impact Statement quantifying structural development across the full fellowship cohort. For multi-market programmes, cohort data is segmented by country or market, enabling programme-level and market-level structural benchmarks from a single deployment.</div>
+              <div class="p-includes" style="margin-top:6px;">
+                <div class="p-inc">Analyst-written Curriculum Signal Output per fellow (intake)</div>
+                <div class="p-inc">Analyst-written report at exit + individual Score Shift</div>
+                <div class="p-inc">Cohort structural map before fellowship begins</div>
+                <div class="p-inc">ESG Impact Statement — analyst-written for funder reporting</div>
+                <div class="p-inc">Country/market segmentation for pan-African programmes</div>
+                <div class="p-inc">Live API feed to programme management platform</div>
+              </div>
+            </div>
+            <div>
+              <div class="p-for" style="margin-bottom:4px;">Why analyst-written at this tier</div>
+              <div class="p-desc" style="margin-bottom:8px;">Fellows are professionals selected through a competitive process. An automated templated output is immediately visible as such and would undermine the prestige of the fellowship. Every Curriculum Signal Output at this tier is written by an Inala analyst — pattern statement, flag text, first expansion move — specific to this fellow and their business. This is what distinguishes a fellowship instrument from a survey.</div>
+              <div class="p-mec"><strong>Fellowship ROI framing:</strong> Corporate sponsors recover measurably more value per fellowship hour when fellows begin with a structural map of their own capacity. The Score Shift Report is the before-and-after structural measure that attendance data and completion certificates cannot produce — designed to slot directly into ESG and sustainability reporting frameworks without additional data processing.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div>
+      <div class="sh sh-nv">What is included — at a glance</div>
+      <table class="comp">
+        <tr>
+          <th style="width:26%">Feature</th>
+          <th class="h-co" style="width:12%">Cohort<br>R65k</th>
+          <th class="h-pa" style="width:12%">Partnership<br>R120k/yr</th>
+          <th class="h-in" style="width:12%">Institutional<br>R3,500/pp</th>
+          <th class="h-df" style="width:12%">DFI<br>R6.5k/app</th>
+          <th style="background:#F5EDD8;color:#8A6520;font-size:6pt;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:6px 9px;text-align:center;">Fellowship<br>R8,500/fellow</th>
+        </tr>
+        <tr><td>Individual report (analyst-written)</td><td class="ch">✓</td><td class="ch">✓</td><td class="co">Automated</td><td class="ch">✓</td><td class="ch">✓</td></tr>
+        <tr><td>Module Navigation Signal</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td><td class="cx">–</td></tr>
+        <tr><td>Cohort Benchmark Report</td><td class="ch">✓</td><td class="ch">✓</td><td class="ch">✓</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>Analyst debrief session</td><td class="ch">1×</td><td class="ch">2×/yr</td><td class="co">On request</td><td class="cx">–</td><td class="co">On request</td></tr>
+        <tr><td>Exit re-assessment + Score Shift Report</td><td class="ch">✓</td><td class="ch">✓</td><td class="ch">✓</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>ESG / sustainability impact statement</td><td class="cx">–</td><td class="cx">–</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>Country / market segmentation</td><td class="cx">–</td><td class="cx">–</td><td class="co">Add-on</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>Live API feed to LMS / portal</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>Real-time cohort risk dashboard</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td><td class="ch">✓</td></tr>
+        <tr><td>Annual sector benchmark report</td><td class="cx">–</td><td class="ch">✓</td><td class="co">Add-on</td><td class="cx">–</td><td class="co">Add-on</td></tr>
+        <tr><td>B-BBEE skills development evidence</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td><td class="co">Where applicable</td></tr>
+        <tr><td>Deployment Readiness Rating</td><td class="cx">–</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td></tr>
+        <tr><td>Document verification + audit trail</td><td class="cx">–</td><td class="cx">–</td><td class="cx">–</td><td class="ch">✓</td><td class="cx">–</td></tr>
+      </table>
+    </div>
+
+    <!-- BOTTOM STRIP -->
+    <div style="background:var(--navy);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:16px;">
+      <div style="flex:1;">
+        <div style="font-size:6pt;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(201,164,74,0.5);margin-bottom:3px;">Pricing notes</div>
+        <div style="font-size:7pt;color:rgba(255,255,255,0.38);line-height:1.7;font-weight:300;">All prices exclusive of VAT · Milestone-based invoicing — payment tied to delivered outputs · Volume pricing available for DFI pipelines above 50 applicants per year · Institutional setup (R15,000 once-off) required for API and dashboard deployment · All engagements subject to signed service agreement · Prices in ZAR · Globally deployable</div>
+        <div style="font-size:6.5pt;color:rgba(201,164,74,0.45);line-height:1.6;font-weight:300;margin-top:4px;font-style:italic;">MEC = Mentorship Efficiency Credit — the estimated value of facilitation or analyst time saved by deploying FOSR as a pre-diagnostic. The MEC typically offsets the full engagement cost before the first session begins.</div>
+      </div>
+      <div style="text-align:right;font-size:7pt;color:rgba(255,255,255,0.28);line-height:1.9;white-space:nowrap;margin-left:8px;">
+        hello@inaladiagnostics.co.za<br>
+        inaladiagnostics.github.io<br>
+        +27 63 714 8225
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="f-l">Inala Advisory (Pty) Ltd · Inala Financial Diagnostics · Decision Gate Framework · © 2026 · Confidential</div>
+    <div class="f-r">All prices ZAR excl. VAT · Subject to signed service agreement</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,462 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--ink:#0C2340;--ink-mid:#185FA5;--ink-light:#E6F1FB;
+--teal:#1D9E75;--teal-light:#E1F5EE;--teal-dark:#0F6E56;
+--amber:#BA7517;--amber-light:#FAEEDA;--amber-dark:#633806;
+--coral:#D85A30;--coral-light:#FAECE7;--coral-dark:#712B13;
+--purple:#534AB7;--purple-light:#EEEDFE;--purple-dark:#3C3489;
+}
+body{font-family:var(--font-sans,system-ui);background:transparent}
+.shell{border:0.5px solid var(--color-border-tertiary);border-radius:12px;overflow:hidden;background:var(--color-background-primary)}
+.top-bar{padding:14px 20px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:space-between}
+.tb-brand{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.tb-sub{font-size:11px;color:var(--color-text-tertiary);margin-top:1px}
+.tab-row{display:flex;gap:2px;padding:0 20px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.tab{font-size:12px;padding:9px 14px;cursor:pointer;color:var(--color-text-tertiary);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--color-text-secondary)}
+.tab.active{color:var(--ink-mid);border-bottom-color:var(--ink-mid);font-weight:500}
+.view{display:none;padding:18px 20px}
+.view.active{display:block}
+.sh{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:10px}
+.div{height:1px;background:var(--color-border-tertiary);margin:14px 0}
+
+.tier-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.tier-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.price-card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px}
+.price-card.featured{border-width:1.5px;border-color:var(--ink-mid)}
+.pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.pc-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.pc-badge{font-size:9px;padding:2px 7px;border-radius:20px;background:var(--ink-light);color:var(--ink-mid)}
+.pc-badge.new{background:var(--teal-light);color:var(--teal-dark)}
+.pc-badge.rec{background:var(--ink-light);color:var(--ink-mid)}
+.pc-price{font-size:22px;font-weight:300;color:var(--color-text-primary);margin:6px 0 2px}
+.pc-price-usd{font-size:11px;color:var(--color-text-tertiary);margin:0 0 4px;letter-spacing:.02em}
+.pc-unit{font-size:10px;color:var(--color-text-tertiary);margin-bottom:8px}
+.pc-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.55;margin-bottom:10px}
+.pc-accent{width:20px;height:3px;border-radius:2px;margin-bottom:8px}
+.items{display:flex;flex-direction:column;gap:4px}
+.item{display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--color-text-secondary)}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dot.on{background:var(--teal)}
+.dot.off{background:var(--color-border-tertiary)}
+.dot.warn{background:var(--amber)}
+
+.teal-box{border-left:3px solid var(--teal);border-radius:0 8px 8px 0;background:var(--teal-light);padding:10px 13px;margin-bottom:12px}
+.teal-lbl{font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:3px}
+.teal-txt{font-size:12px;color:#085041;line-height:1.6}
+.amber-box{border-left:3px solid var(--amber);border-radius:0 8px 8px 0;background:var(--amber-light);padding:10px 13px;margin-bottom:12px}
+.amber-lbl{font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--amber);margin-bottom:3px}
+.amber-txt{font-size:12px;color:var(--amber-dark);line-height:1.6}
+.purple-box{border-left:3px solid var(--purple);border-radius:0 8px 8px 0;background:var(--purple-light);padding:10px 13px;margin-bottom:12px}
+.purple-lbl{font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--purple);margin-bottom:3px}
+.purple-txt{font-size:12px;color:var(--purple-dark);line-height:1.6}
+
+.bundle-card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px;margin-bottom:10px}
+.bc-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.bc-left{flex:1}
+.bc-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.bc-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:6px}
+.bc-includes{display:flex;gap:5px;flex-wrap:wrap}
+.bc-pill{font-size:10px;padding:2px 7px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-tertiary)}
+.bc-pill.a{background:var(--ink-light);color:var(--ink-mid);border-color:var(--ink-light)}
+.bc-pill.b{background:var(--teal-light);color:var(--teal-dark);border-color:var(--teal-light)}
+.bc-pill.c{background:var(--purple-light);color:var(--purple-dark);border-color:var(--purple-light)}
+.bc-right{text-align:right;flex-shrink:0}
+.bc-price{font-size:20px;font-weight:300;color:var(--color-text-primary)}
+.bc-unit{font-size:10px;color:var(--color-text-tertiary)}
+.bc-save{font-size:10px;color:var(--teal);margin-top:3px}
+
+.addon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:8px;margin-bottom:7px}
+.ar-left{flex:1}
+.ar-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.ar-desc{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.ar-price{font-size:13px;font-weight:500;color:var(--color-text-primary);text-align:right;flex-shrink:0}
+.ar-unit{font-size:10px;color:var(--color-text-tertiary);display:block}
+
+.milestone-row{display:flex;gap:8px;margin-bottom:14px}
+.ms{flex:1;background:var(--color-background-secondary);border-radius:8px;padding:10px}
+.ms-pct{font-size:18px;font-weight:300;color:var(--color-text-primary)}
+.ms-lbl{font-size:10px;color:var(--color-text-tertiary);margin-top:3px}
+.ms-note{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
+
+.upgrade-path{display:flex;align-items:center;gap:0;margin-bottom:14px;overflow:hidden;border-radius:8px;border:0.5px solid var(--color-border-tertiary)}
+.up-step{flex:1;padding:10px 12px;border-right:0.5px solid var(--color-border-tertiary)}
+.up-step:last-child{border-right:none}
+.up-name{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.up-price{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.up-arrow{font-size:11px;color:var(--color-text-tertiary);padding:0 4px;display:flex;align-items:center}
+</style>
+
+<h2 class="sr-only">FOSR full pricing architecture — assessment tiers, bundles, add-ons, and upgrade paths</h2>
+
+<div class="shell">
+<div class="top-bar">
+  <div><div class="tb-brand">FOSR product suite · pricing</div><div class="tb-sub">ZAR · excl VAT · all cohort sizes noted</div></div>
+</div>
+<div class="tab-row">
+  <div class="tab active" onclick="st(this,'assess')">Assessment tiers</div>
+  <div class="tab" onclick="st(this,'bundles')">Bundles</div>
+  <div class="tab" onclick="st(this,'addons')">Add-ons</div>
+  <div class="tab" onclick="st(this,'upgrade')">Upgrade paths</div>
+  <div class="tab" onclick="st(this,'milestones')">Invoicing</div>
+  <div class="tab" onclick="st(this,'intl')">International</div>
+</div>
+
+<!-- ASSESSMENT TIERS -->
+<div class="view active" id="v-assess">
+  <div class="teal-box">
+    <div class="teal-lbl">The assessment is always included</div>
+    <div class="teal-txt">Every product in the suite requires a completed FOSR. The question is which tier of assessment output the programme needs — and whether Inala delivers it or the programme self-administers. These three tiers cover all scenarios.</div>
+  </div>
+  <div class="sh">Three assessment output tiers</div>
+  <div class="tier-grid-3">
+    <div class="price-card">
+      <div class="pc-accent" style="background:var(--color-border-tertiary)"></div>
+      <div class="pc-top"><div class="pc-name">Level 1B auto</div><span class="pc-badge new">Self-service</span></div>
+      <div class="pc-price">R1,800</div>
+      <div class="pc-unit">per entrepreneur · min 10</div>
+      <div class="pc-desc">Programme administers via Tally link. System scores, generates band, pillar scores, intervention type, and 60-cell matrix pattern statement. No analyst involvement.</div>
+      <div class="items">
+        <div class="item"><div class="dot on"></div>Band + pillar scores</div>
+        <div class="item"><div class="dot on"></div>Intervention type</div>
+        <div class="item"><div class="dot on"></div>Auto pattern statement</div>
+        <div class="item"><div class="dot on"></div>Response time metadata</div>
+        <div class="item"><div class="dot off"></div>Analyst-written pattern statement</div>
+        <div class="item"><div class="dot off"></div>Bespoke flag text</div>
+      </div>
+    </div>
+    <div class="price-card featured">
+      <div class="pc-accent" style="background:var(--ink-mid)"></div>
+      <div class="pc-top"><div class="pc-name">Level 1A analyst</div><span class="pc-badge rec">Approach 1</span></div>
+      <div class="pc-price">R3,500</div>
+      <div class="pc-unit">per entrepreneur · min 10 · 5 day turnaround</div>
+      <div class="pc-desc">Inala analyst writes the pattern statement and flag text. Bespoke to this entrepreneur. The signal quality that powers everything else downstream.</div>
+      <div class="items">
+        <div class="item"><div class="dot on"></div>Band + pillar scores</div>
+        <div class="item"><div class="dot on"></div>Intervention type</div>
+        <div class="item"><div class="dot on"></div>Analyst pattern statement</div>
+        <div class="item"><div class="dot on"></div>Bespoke flag text (up to 3)</div>
+        <div class="item"><div class="dot on"></div>Response time metadata</div>
+        <div class="item"><div class="dot on"></div>First expansion move</div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="pc-accent" style="background:var(--purple)"></div>
+      <div class="pc-top"><div class="pc-name">Cohort benchmark</div><span class="pc-badge" style="background:var(--purple-light);color:var(--purple-dark)">Add to either</span></div>
+      <div class="pc-price">R4,500</div>
+      <div class="pc-unit">per cohort · any size</div>
+      <div class="pc-desc">Aggregate cohort-level signal report. Pillar distribution, band breakdown, flag frequency, technical advisor signal brief. Included in Approach 1 Cohort package.</div>
+      <div class="items">
+        <div class="item"><div class="dot on"></div>Cohort pillar distribution</div>
+        <div class="item"><div class="dot on"></div>Band breakdown</div>
+        <div class="item"><div class="dot on"></div>Technical advisor brief</div>
+        <div class="item"><div class="dot on"></div>Flag frequency analysis</div>
+        <div class="item"><div class="dot warn"></div>Included in Cohort package</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">Approach 1 packaged pricing (analyst-led)</div>
+  <div class="tier-grid-3">
+    <div class="price-card">
+      <div class="pc-accent" style="background:var(--ink-mid)"></div>
+      <div class="pc-name">Pilot</div>
+      <div class="pc-price">R19,500</div>
+      <div class="pc-price-usd">USD 1,300 · international</div>
+      <div class="pc-unit">up to 10 entrepreneurs · credited to cohort</div>
+      <div class="pc-desc">First engagement. Auto-report (Level 1B). Credited in full if programme upgrades to Cohort within 90 days.</div>
+    </div>
+    <div class="price-card">
+      <div class="pc-accent" style="background:var(--ink-mid)"></div>
+      <div class="pc-name">Cohort</div>
+      <div class="pc-price">R65,000</div>
+      <div class="pc-price-usd">USD 4,400 · international</div>
+      <div class="pc-unit">up to 20 · R2,800/head above · incl. benchmark</div>
+      <div class="pc-desc">Level 1A analyst reports for all members. Cohort benchmark report included. Debrief included.</div>
+    </div>
+    <div class="price-card">
+      <div class="pc-accent" style="background:var(--ink-mid)"></div>
+      <div class="pc-name">Partnership</div>
+      <div class="pc-price">R120,000/yr</div>
+      <div class="pc-price-usd">USD 8,100/yr · international</div>
+      <div class="pc-unit">up to 50 · R2,000/head above · 2 debriefs/yr</div>
+      <div class="pc-desc">Annual licence. Score Shift at exit. Annual effectiveness report. Two debriefs per year.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BUNDLES -->
+<div class="view" id="v-bundles">
+  <div class="purple-box">
+    <div class="purple-lbl">Bundle logic</div>
+    <div class="purple-txt">Every bundle includes the assessment tier that powers it. Programmes do not need to purchase assessment and app separately — the bundle is the entry point. Upgrade paths allow a programme to move between assessment tiers without repurchasing the app.</div>
+  </div>
+  <div class="sh">Assessment + Mentor App bundles</div>
+
+  <div class="bundle-card">
+    <div class="bc-row">
+      <div class="bc-left">
+        <div class="bc-name">Starter bundle · Level 1B + Mentor App</div>
+        <div class="bc-desc">For programmes that want the structured mentorship intelligence layer with an auto-signal assessment. No analyst. Programme administers the Tally intake. Mentor app activates immediately on completion. Includes primary mentor view and technical advisor cohort brief.</div>
+        <div class="bc-includes">
+          <span class="bc-pill a">Level 1B auto assessment</span>
+          <span class="bc-pill b">Mentor app · primary mentor view</span>
+          <span class="bc-pill b">Technical advisor cohort brief</span>
+          <span class="bc-pill">Up to 20 members</span>
+          <span class="bc-pill">6-month access</span>
+        </div>
+      </div>
+      <div class="bc-right">
+        <div class="bc-price">R32,000</div>
+        <div class="bc-unit">per cohort · up to 20</div>
+        <div class="bc-save">R1,600/member above</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bundle-card" style="border-color:var(--ink-mid);border-width:1.5px">
+    <div style="font-size:9px;background:var(--ink-light);color:var(--ink-mid);padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">Recommended</div>
+    <div class="bc-row">
+      <div class="bc-left">
+        <div class="bc-name">Professional bundle · Level 1A + Mentor App</div>
+        <div class="bc-desc">Full analyst-written reports plus the mentor app. The mentor's session prep view shows a bespoke pattern statement — not auto-generated. This is the highest quality signal the system produces at the individual level. Cohort benchmark and technical advisor brief included.</div>
+        <div class="bc-includes">
+          <span class="bc-pill a">Level 1A analyst assessment</span>
+          <span class="bc-pill a">Cohort benchmark report</span>
+          <span class="bc-pill b">Mentor app · all role views</span>
+          <span class="bc-pill b">Technical advisor cohort brief</span>
+          <span class="bc-pill c">Observation mode</span>
+          <span class="bc-pill">Up to 20 members</span>
+        </div>
+      </div>
+      <div class="bc-right">
+        <div class="bc-price">R78,000</div>
+        <div class="bc-unit">per cohort · up to 20</div>
+        <div class="bc-save">Saves R5,000 vs. separate</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bundle-card">
+    <div class="bc-row">
+      <div class="bc-left">
+        <div class="bc-name">Partnership bundle · annual · Level 1A + Mentor App</div>
+        <div class="bc-desc">Annual licence covering two cohorts. Full analyst assessment both intakes. Score Shift at exit for both. Annual programme effectiveness report mapping mentor session focus to score movement. Observation mode active for all mentors throughout the year.</div>
+        <div class="bc-includes">
+          <span class="bc-pill a">Level 1A × 2 cohorts</span>
+          <span class="bc-pill a">Score Shift at exit</span>
+          <span class="bc-pill b">Mentor app · full year</span>
+          <span class="bc-pill c">Observation mode</span>
+          <span class="bc-pill c">Annual effectiveness report</span>
+          <span class="bc-pill">Up to 50 members</span>
+        </div>
+      </div>
+      <div class="bc-right">
+        <div class="bc-price">R145,000</div>
+        <div class="bc-unit">per year · up to 50</div>
+        <div class="bc-save">R2,000/head above 50</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD-ONS -->
+<div class="view" id="v-addons">
+  <div class="sh">Available add-ons · any package</div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Score Shift · exit re-assessment</div>
+      <div class="ar-desc">Re-assessment at programme end. Before/after pillar movement. Included in Partnership.</div>
+    </div>
+    <div class="ar-price">R950<span class="ar-unit">per entrepreneur</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Cohort benchmark report</div>
+      <div class="ar-desc">Aggregate pillar distribution, band breakdown, technical advisor brief. Included in Cohort and above.</div>
+    </div>
+    <div class="ar-price">R4,500<span class="ar-unit">per cohort</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Technical advisor cohort brief</div>
+      <div class="ar-desc">Session-level cohort signal for curriculum facilitators. Included in all bundles.</div>
+    </div>
+    <div class="ar-price">R2,500<span class="ar-unit">per cohort</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Mentor observation mode</div>
+      <div class="ar-desc">Full cohort-cycle behavioural engagement signal for all mentors. Observation report at end. Included in Professional and Partnership bundles.</div>
+    </div>
+    <div class="ar-price">R4,500<span class="ar-unit">per mentor · per cohort</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Assessment tier upgrade · 1B to 1A</div>
+      <div class="ar-desc">Upgrade any Starter bundle to analyst-written pattern statements. Per-entrepreneur differential.</div>
+    </div>
+    <div class="ar-price">R1,700<span class="ar-unit">per entrepreneur</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Annual effectiveness report</div>
+      <div class="ar-desc">Cross-product analysis mapping mentor session focus to score movement. Included in Partnership bundle.</div>
+    </div>
+    <div class="ar-price">R12,000<span class="ar-unit">per year</span></div>
+  </div>
+  <div class="addon-row">
+    <div class="ar-left">
+      <div class="ar-name">Programme debrief session</div>
+      <div class="ar-desc">Structured review of cohort signal with programme coordinator. 90 minutes. First included in Cohort package.</div>
+    </div>
+    <div class="ar-price">R5,500<span class="ar-unit">per session</span></div>
+  </div>
+</div>
+
+<!-- UPGRADE PATHS -->
+<div class="view" id="v-upgrade">
+  <div class="sh">Upgrade path · assessment only</div>
+  <div class="upgrade-path">
+    <div class="up-step" style="background:var(--color-background-secondary)">
+      <div class="up-name">Pilot · Level 1B</div>
+      <div class="up-price">R19,500 · up to 10</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Cohort · Level 1A</div>
+      <div class="up-price">R65,000 · up to 20 · pilot credited</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Partnership · Level 1A</div>
+      <div class="up-price">R120,000/yr · up to 50</div>
+    </div>
+  </div>
+
+  <div class="sh">Upgrade path · Starter bundle to Professional</div>
+  <div class="upgrade-path">
+    <div class="up-step" style="background:var(--color-background-secondary)">
+      <div class="up-name">Starter bundle</div>
+      <div class="up-price">R32,000 · Level 1B + app</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Assessment upgrade</div>
+      <div class="up-price">R1,700/entrepreneur · 1B to 1A</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Professional bundle</div>
+      <div class="up-price">R78,000 · Level 1A + app</div>
+    </div>
+  </div>
+
+  <div class="sh">Upgrade path · app only to bundle</div>
+  <div class="upgrade-path">
+    <div class="up-step" style="background:var(--color-background-secondary)">
+      <div class="up-name">Existing FOSR client</div>
+      <div class="up-price">Already has Level 1A reports</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Mentor App add-on</div>
+      <div class="up-price">R18,000 · app only · existing signal</div>
+    </div>
+    <div class="up-arrow">›</div>
+    <div class="up-step">
+      <div class="up-name">Professional bundle renewal</div>
+      <div class="up-price">R78,000 · next cohort · full bundle</div>
+    </div>
+  </div>
+
+  <div class="amber-box">
+    <div class="amber-lbl">The clean rule</div>
+    <div class="amber-txt">A programme that already has FOSR Approach 1 from a previous cohort can add the Mentor App at R18,000 — their existing reports activate it. They don't repurchase the assessment. On renewal they move to a bundle. A new programme without any FOSR history must start with either the Pilot, the Starter bundle, or the Professional bundle. There is no Mentor App without an assessment, ever.</div>
+  </div>
+</div>
+
+<!-- INVOICING -->
+<div class="view" id="v-milestones">
+  <div class="sh">Standard milestone invoicing</div>
+  <div class="milestone-row">
+    <div class="ms"><div class="ms-pct">30%</div><div class="ms-lbl">On agreement</div><div class="ms-note">Non-refundable once onboarding begins</div></div>
+    <div class="ms"><div class="ms-pct">40%</div><div class="ms-lbl">On deployment</div><div class="ms-note">At first cohort intake / Tally link live</div></div>
+    <div class="ms"><div class="ms-pct">30%</div><div class="ms-lbl">On completion</div><div class="ms-note">At final report delivery / cohort exit</div></div>
+  </div>
+
+  <div class="sh">Alternative split · larger engagements</div>
+  <div class="milestone-row">
+    <div class="ms"><div class="ms-pct">30%</div><div class="ms-lbl">On agreement</div><div class="ms-note">Non-refundable</div></div>
+    <div class="ms"><div class="ms-pct">35%</div><div class="ms-lbl">Mid-programme</div><div class="ms-note">At cohort halfway point</div></div>
+    <div class="ms"><div class="ms-pct">35%</div><div class="ms-lbl">On completion</div><div class="ms-note">At report delivery</div></div>
+  </div>
+
+  <div class="teal-box">
+    <div class="teal-lbl">MEC · Mentorship Efficiency Credit</div>
+    <div class="teal-txt">All pricing conversations for bundles should include the MEC framing. FOSR saves 3–5 hours of basic financial discovery per cohort member = R45,000–R75,000 of mentor time for a 20-member cohort. The Starter bundle at R32,000 pays for itself before the first session. The Professional bundle at R78,000 costs less than the mentor time it replaces. This is not a cost — it is a reallocation of existing spend toward higher-quality use of mentor hours.</div>
+  </div>
+</div>
+
+<!-- INTERNATIONAL -->
+<div class="view" id="v-intl">
+  <div class="teal-box">
+    <div class="teal-lbl">International buyers · pricing and payment terms</div>
+    <div class="teal-txt">Pricing outside South Africa is quoted in USD at a 10% uplift over the direct ZAR conversion. The uplift absorbs FX conversion spread (2–4%), receiving-bank inward wire fees (1–2%), and correspondent-bank slippage (2–4%). This is not a premium — it is the cost of making cross-border transactions net to the same effective receipt as a domestic ZAR sale. Standard convention in professional services sold across African markets.</div>
+  </div>
+
+  <div class="sh">ZAR · USD equivalence (international pricing)</div>
+  <div style="border:0.5px solid var(--color-border-tertiary);border-radius:8px;overflow:hidden;margin-bottom:14px">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;background:var(--ink);color:white;padding:10px 14px;font-size:10px;letter-spacing:.08em;text-transform:uppercase">
+      <div>Engagement</div><div>ZAR (SA)</div><div>Straight conversion</div><div>USD (international)</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="color:var(--color-text-primary);font-weight:500">Pilot</div><div>R19,500</div><div>~USD 1,189</div><div style="color:var(--color-text-primary);font-weight:500">USD 1,300</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="color:var(--color-text-primary);font-weight:500">Cohort</div><div>R65,000</div><div>~USD 3,963</div><div style="color:var(--color-text-primary);font-weight:500">USD 4,400</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="color:var(--color-text-primary);font-weight:500">Partnership / yr</div><div>R120,000</div><div>~USD 7,317</div><div style="color:var(--color-text-primary);font-weight:500">USD 8,100</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="color:var(--color-text-primary);font-weight:500">Cohort / head above 20</div><div>R2,800</div><div>~USD 171</div><div style="color:var(--color-text-primary);font-weight:500">USD 190</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="color:var(--color-text-primary);font-weight:500">Fellowship / fellow</div><div>R8,500</div><div>~USD 518</div><div style="color:var(--color-text-primary);font-weight:500">USD 575</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;padding:10px 14px;font-size:11.5px;color:var(--color-text-tertiary);background:var(--color-background-secondary)">
+      <div style="font-weight:500;color:var(--color-text-secondary)">Add-ons (intl)</div><div colspan="3" style="grid-column:span 3">1A upgrade +USD 115/entrepreneur · Benchmark +USD 300 · Debrief +USD 370 · Score Shift +USD 65/entrepreneur</div>
+    </div>
+  </div>
+
+  <div class="sh">Payment terms · international sales</div>
+  <div class="milestone-row" style="flex-wrap:wrap">
+    <div class="ms" style="flex:1;min-width:200px"><div class="ms-pct" style="font-size:13px;color:var(--ink-mid)">SWIFT "OUR"</div><div class="ms-lbl">Payment method</div><div class="ms-note">Buyer instructs SWIFT under "OUR" — all correspondent and receiving bank fees for buyer's account. Standard international B2B convention.</div></div>
+    <div class="ms" style="flex:1;min-width:200px"><div class="ms-pct" style="font-size:13px;color:var(--ink-mid)">Net 30</div><div class="ms-lbl">Terms per milestone</div><div class="ms-note">Each milestone invoice payable 30 days from issue. Net 60 negotiable only on final milestone of Partnership engagements.</div></div>
+    <div class="ms" style="flex:1;min-width:200px"><div class="ms-pct" style="font-size:13px;color:var(--ink-mid)">USD fixed</div><div class="ms-lbl">Currency denomination</div><div class="ms-note">Contract denominated in USD. Invoiced in USD. Received in USD. No ZAR revaluation between proposal and invoice.</div></div>
+  </div>
+
+  <div class="amber-box">
+    <div class="amber-lbl">Withholding tax · buyer responsibility</div>
+    <div class="amber-txt">Several African jurisdictions apply withholding tax (typically 5–15%) on services rendered to local entities by foreign providers. Ghana, Kenya, Nigeria, Rwanda among others. Standard contract clause: buyer grosses up — withholding tax is paid on top of the agreed fee, not deducted from it. Double-taxation treaty benefits may apply where a DTA exists between South Africa and the buyer's jurisdiction; buyer is responsible for processing treaty-relief documentation. Confirm specific jurisdiction before signature.</div>
+  </div>
+
+  <div class="purple-box">
+    <div class="purple-lbl">Currency coverage across African markets</div>
+    <div class="purple-txt">Default international currency: USD — appropriate for Anglophone Africa (Ghana, Kenya, Nigeria, Uganda, Rwanda, Ethiopia, Tanzania) and most institutional buyers funded by multilaterals (World Bank, USAID, GIZ, Global Affairs Canada). EUR available on request for Francophone West and Central Africa (Senegal, Côte d'Ivoire, Cameroon, Gabon — CFA franc is EUR-pegged). ZAR retained for SADC buyers with ZAR-denominated budgets, including SA regional offices of multinationals and certain SADC institutional buyers.</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function st(tab,id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('v-'+id).classList.add('active');
+}
+</script>

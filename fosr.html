@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOSR · by Inala Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ───────────────────────────────── */
+:root {
+  --navy:       #0C2340;
+  --navy-mid:   #122D50;
+  --navy-light: #1A3A60;
+  --teal:       #1D9E75;
+  --teal-light: #E1F5EE;
+  --teal-dark:  #0F6E56;
+  --teal-mid:   #5DCAA5;
+  --cream:      #F8F6F1;
+  --cream-dk:   #EDE8DF;
+  --ink:        #1A1A1A;
+  --ink-mid:    #3D3D3A;
+  --ink-light:  #888880;
+  --white:      #FFFFFF;
+  --serif:      'DM Serif Display', Georgia, serif;
+  --sans:       'DM Sans', system-ui, sans-serif;
+  --nav-h:      56px;
+}
+
+/* ─── RESET ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);overflow:hidden;height:100vh}
+
+/* ─── NAV ────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);background:var(--navy);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-left{display:flex;align-items:center;gap:14px}
+.nav-back{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.55);text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:500;line-height:1;
+  transition:background .2s, border-color .2s, color .2s;
+  flex-shrink:0;
+}
+.nav-back:hover{
+  background:rgba(29,158,117,.12);
+  border-color:var(--teal);
+  color:var(--teal-mid);
+}
+.nav-brand{font-family:var(--serif);font-size:16px;color:var(--white);flex-shrink:0;display:flex;align-items:baseline;gap:7px}
+.nav-brand span{font-family:var(--sans);font-size:10px;color:rgba(255,255,255,.38);font-weight:400;letter-spacing:.04em;text-transform:uppercase}
+.nav-links{display:flex;gap:0;align-items:center}
+.nav-links button{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:11.5px;font-weight:400;
+  color:rgba(255,255,255,0.52);padding:0 15px;height:var(--nav-h);
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+  letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;
+}
+.nav-links button:hover{color:rgba(255,255,255,0.82)}
+.nav-links button.active{color:var(--white);border-bottom-color:var(--teal)}
+.nav-cta{
+  background:var(--teal)!important;color:var(--white)!important;
+  border-radius:4px;height:32px!important;padding:0 16px!important;
+  font-size:11px!important;font-weight:500!important;
+  margin-left:12px;border-bottom:none!important;
+}
+.nav-cta:hover{background:var(--teal-dark)!important}
+
+/* ─── SECTIONS WRAP ──────────────────────────── */
+.wrap{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;overflow:hidden}
+section{display:none;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}
+section.active{display:block}
+section::-webkit-scrollbar{width:3px}
+section::-webkit-scrollbar-thumb{background:var(--cream-dk);border-radius:2px}
+#s-home.active,#s-engage.active{display:flex;flex-direction:column}
+
+/* ─── SHARED LAYOUT ──────────────────────────── */
+.si{max-width:1100px;margin:0 auto;padding:68px 48px 80px}
+.eyebrow{
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--teal)}
+.section-hl{
+  font-family:var(--serif);font-size:clamp(26px,3vw,40px);
+  line-height:1.18;color:var(--navy);margin-bottom:18px;
+}
+.section-hl em{font-style:italic}
+.section-intro{font-size:15px;line-height:1.82;color:var(--ink-mid);max-width:620px;margin-bottom:52px}
+
+/* ─── BUTTONS ────────────────────────────────── */
+.btn-p{
+  display:inline-block;background:var(--teal);color:var(--white);
+  border:none;border-radius:4px;font-family:var(--sans);
+  font-size:13px;font-weight:500;padding:13px 26px;cursor:pointer;
+  text-decoration:none;transition:background .2s;
+}
+.btn-p:hover{background:var(--teal-dark)}
+.btn-g{
+  display:inline-block;background:transparent;color:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.22);border-radius:4px;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  padding:13px 26px;cursor:pointer;text-decoration:none;
+  transition:border-color .2s,color .2s;
+}
+.btn-g:hover{border-color:rgba(255,255,255,.5);color:var(--white)}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#25D366;color:var(--white);
+  border:none;border-radius:4px;font-family:var(--sans);
+  font-size:13px;font-weight:500;padding:13px 26px;cursor:pointer;
+  text-decoration:none;transition:background .2s;
+}
+.btn-wa:hover{background:#1da851}
+.btn-email{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy-mid);color:var(--white);
+  border:1px solid rgba(255,255,255,.15);border-radius:4px;
+  font-family:var(--sans);font-size:13px;font-weight:500;
+  padding:13px 26px;cursor:pointer;text-decoration:none;
+  transition:border-color .2s,background .2s;
+}
+.btn-email:hover{background:var(--navy-light);border-color:rgba(255,255,255,.3)}
+
+/* ─── TABS ───────────────────────────────────── */
+.tab-nav{display:flex;border-bottom:1px solid var(--cream-dk);margin-bottom:30px;gap:0}
+.tab-btn{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12.5px;font-weight:400;
+  color:var(--ink-light);padding:11px 22px 11px 0;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--teal);font-weight:500}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ─── S1: HOME ───────────────────────────────── */
+#s-home{background:var(--navy)}
+.hero{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - var(--nav-h))}
+.hl{padding:80px 60px 60px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.08)}
+.h-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:26px;display:flex;align-items:center;gap:12px}
+.h-eyebrow::before{content:'';display:block;width:30px;height:1px;background:var(--teal)}
+.h-hl{font-family:var(--serif);font-size:clamp(34px,3.8vw,52px);line-height:1.12;color:var(--white);margin-bottom:14px}
+.h-hl em{font-style:italic;color:var(--teal-mid)}
+.h-assess-line{
+  font-family:var(--sans);font-size:14.5px;line-height:1.65;
+  color:rgba(255,255,255,.82);font-weight:400;
+  max-width:620px;margin:0 0 26px;
+  padding:16px 20px;
+  background:rgba(29,158,117,.08);
+  border-left:2px solid var(--teal);
+  border-radius:0 4px 4px 0;
+}
+.h-infra{
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:28px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.h-infra::before{content:'';display:block;width:16px;height:1px;background:var(--teal)}
+.h-body{font-size:15px;line-height:1.76;color:rgba(255,255,255,.60);max-width:440px;margin-bottom:40px}
+.h-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+.hr{padding:80px 56px 60px;display:flex;flex-direction:column;justify-content:center;gap:22px}
+.h-stat{border-left:2px solid var(--teal);padding:14px 0 14px 22px}
+.h-stat-n{font-family:var(--serif);font-size:42px;color:var(--white);line-height:1;margin-bottom:5px}
+.h-stat-l{font-size:12px;color:rgba(255,255,255,.48);line-height:1.5}
+.h-scope{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;padding:22px;margin-top:6px;
+}
+.h-scope-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:10px}
+.h-scope-text{font-size:13px;line-height:1.68;color:rgba(255,255,255,.62)}
+.h-quote{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:22px}
+.h-quote-t{font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.6;color:rgba(255,255,255,.78);margin-bottom:10px}
+.h-quote-a{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+/* ─── S2: THE PROBLEM ────────────────────────── */
+#s-problem{background:var(--cream)}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-bottom:52px}
+.prob-col-head{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--cream-dk)}
+.prob-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.pi-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.pi-dot.n{background:var(--navy)}.pi-dot.t{background:var(--teal)}
+.pi-text{font-size:14px;line-height:1.68;color:var(--ink-mid)}
+.pi-text strong{color:var(--ink);font-weight:500}
+
+.pq{background:var(--navy);border-radius:8px;padding:46px 54px;margin-bottom:52px;position:relative;overflow:hidden}
+.pq::before{content:'"';font-family:var(--serif);font-size:160px;line-height:1;color:rgba(255,255,255,.04);position:absolute;top:-20px;left:28px;pointer-events:none}
+.pq-t{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2vw,24px);line-height:1.55;color:var(--white);max-width:680px;position:relative;z-index:1;margin-bottom:18px}
+.pq-a{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-mid);position:relative;z-index:1}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ic{background:var(--white);border:1px solid var(--cream-dk);border-radius:8px;padding:26px}
+.ic-n{font-family:var(--serif);font-size:34px;color:var(--cream-dk);line-height:1;margin-bottom:14px}
+.ic-phase{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-light);margin-bottom:14px;display:block}
+.ic-h{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:7px}
+.ic-b{font-size:13px;line-height:1.66;color:var(--ink-mid)}
+
+/* ─── S3: FOSR ───────────────────────────────── */
+#s-fosr{background:var(--white)}
+.fosr-intro{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:56px;align-items:start}
+.fi-body{font-size:14.5px;line-height:1.82;color:var(--ink-mid)}
+.fi-body p{margin-bottom:15px}
+.fi-body strong{color:var(--ink);font-weight:500}
+.fi-scope-note{
+  background:var(--cream);border-left:3px solid var(--teal);
+  border-radius:0 6px 6px 0;padding:14px 18px;margin-top:20px;
+}
+.fi-scope-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:6px}
+.fi-scope-text{font-size:13px;line-height:1.65;color:var(--ink-mid)}
+
+.fosr-aside{background:var(--navy);border-radius:8px;padding:30px}
+.fa-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:18px}
+.fa-score-row{display:flex;align-items:baseline;gap:8px;margin-bottom:22px}
+.fa-score{font-family:var(--serif);font-size:50px;color:var(--white);line-height:1}
+.fa-score-l{font-size:12px;color:rgba(255,255,255,.45)}
+.fa-p{margin-bottom:12px}
+.fa-pn{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.48);margin-bottom:4px}
+.fa-pn span:last-child{color:var(--white);font-weight:500}
+.fa-track{height:3px;background:rgba(255,255,255,.1);border-radius:2px}
+.fa-fill{height:3px;border-radius:2px;background:var(--teal)}
+.fa-band{display:inline-block;margin-top:14px;font-size:10px;padding:3px 10px;border-radius:20px;background:rgba(29,158,117,.15);color:var(--teal-mid)}
+.fa-dgf{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.fa-dgf-l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px}
+.fa-dgf-t{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+
+.pillars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:30px}
+.pc{border:1px solid var(--cream-dk);border-radius:8px;padding:22px;position:relative;overflow:hidden}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pc.p1::before{background:var(--teal)}
+.pc.p2::before{background:var(--navy)}
+.pc.p3::before{background:#5DCAA5}
+.pc.p4::before{background:#BA7517}
+.pc-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:7px}
+.pc-name{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:7px}
+.pc-w{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;background:var(--cream);color:var(--ink-mid);margin-bottom:10px}
+.pc-desc{font-size:13px;line-height:1.65;color:var(--ink-mid)}
+
+.bands-tbl{width:100%;border-collapse:collapse}
+.bands-tbl th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);font-weight:400;text-align:left;padding:0 14px 10px 0;border-bottom:1px solid var(--cream-dk)}
+.bands-tbl td{padding:13px 14px 13px 0;border-bottom:1px solid var(--cream-dk);font-size:13px;color:var(--ink-mid);vertical-align:top}
+.bands-tbl td:first-child{font-weight:500;color:var(--navy);white-space:nowrap}
+.bp{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px}
+.bp-absent{background:#FEE2E2;color:#991B1B}
+.bp-weak{background:#FAEEDA;color:#854F0B}
+.bp-dev{background:var(--teal-light);color:var(--teal-dark)}
+.bp-sound{background:#DBEAFE;color:#1E40AF}
+.bp-embed{background:var(--navy);color:var(--white)}
+
+.fosr-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fpc{border:1px solid var(--cream-dk);border-radius:8px;padding:22px}
+.fpc.feat{border-color:var(--teal);border-width:1.5px}
+.fpc-tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:var(--teal-light);color:var(--teal-dark);display:inline-block;margin-bottom:9px}
+.fpc-name{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:8px}
+.fpc-price{font-family:var(--serif);font-size:26px;color:var(--navy);line-height:1;margin-bottom:3px}
+.fpc-unit{font-size:10px;color:var(--ink-light);margin-bottom:12px}
+.fpc-items{display:flex;flex-direction:column;gap:5px}
+.fpc-item{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--ink-mid)}
+.fpc-dot{width:4px;height:4px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px}
+.price-note{font-size:11.5px;color:var(--ink-light);margin-top:18px;line-height:1.65}
+
+/* ─── S4: MENTOR APP ─────────────────────────── */
+#s-mentor{background:var(--cream)}
+.ma-strip{
+  background:var(--navy);border-radius:8px;padding:44px 52px;
+  margin-bottom:52px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;
+}
+.mas-ey{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:14px}
+.mas-hl{font-family:var(--serif);font-size:clamp(20px,2.4vw,30px);color:var(--white);line-height:1.26;margin-bottom:14px}
+.mas-body{font-size:13.5px;line-height:1.76;color:rgba(255,255,255,.58)}
+.ma-stats{display:flex;flex-direction:column;gap:12px}
+.ma-stat{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:6px}
+.ma-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px}
+.ma-stat-t{font-size:12.5px;line-height:1.52;color:rgba(255,255,255,.72)}
+
+.roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:44px}
+.rc{background:var(--white);border:1px solid var(--cream-dk);border-radius:8px;padding:26px}
+.rc-role{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:10px}
+.rc-title{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:10px}
+.rc-body{font-size:13px;line-height:1.66;color:var(--ink-mid);margin-bottom:14px}
+.rc-feats{display:flex;flex-direction:column;gap:5px}
+.rc-feat{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--ink-mid)}
+.rc-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rc-dot.t{background:var(--teal)}.rc-dot.n{background:var(--navy)}
+
+.ma-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mpc{background:var(--white);border:1px solid var(--cream-dk);border-radius:8px;padding:22px}
+.mpc.feat{border-color:var(--navy);border-width:1.5px}
+.mpc-name{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:5px}
+.mpc-price{font-family:var(--serif);font-size:24px;color:var(--navy);line-height:1;margin-bottom:3px}
+.mpc-unit{font-size:10px;color:var(--ink-light);margin-bottom:11px}
+.mpc-desc{font-size:12px;line-height:1.62;color:var(--ink-mid)}
+
+/* ─── S5: WHERE IT FITS ──────────────────────── */
+#s-fits{background:var(--white)}
+.buyer-panel{display:none}
+.buyer-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.bp-hl{font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);color:var(--navy);margin-bottom:14px;line-height:1.25}
+.bp-body{font-size:14px;line-height:1.8;color:var(--ink-mid);margin-bottom:22px}
+.bp-voice{background:var(--cream);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:24px}
+.bp-v-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:5px}
+.bp-v-t{font-family:var(--serif);font-style:italic;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.bpi-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:12px}
+.bpi-items{display:flex;flex-direction:column;gap:7px}
+.bpi-item{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--ink-mid);padding:9px 11px;background:var(--cream);border-radius:6px}
+.bpi-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px}
+
+.bp-wyg{background:var(--navy);border-radius:8px;padding:30px;margin-bottom:20px}
+.bp-wyg-l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:18px}
+.bp-wyg-items{display:flex;flex-direction:column;gap:11px}
+.bp-wyg-item{display:flex;gap:11px;align-items:flex-start}
+.bp-wyg-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px}
+.bp-wyg-t{font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.70)}
+
+.bp-pn{border:1px solid var(--cream-dk);border-radius:8px;padding:18px}
+.bp-pn-l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:7px}
+.bp-pn-p{font-family:var(--serif);font-size:26px;color:var(--navy);line-height:1;margin-bottom:3px}
+.bp-pn-u{font-size:10px;color:var(--ink-light);margin-bottom:8px}
+.bp-pn-n{font-size:12px;line-height:1.6;color:var(--ink-mid)}
+
+/* ─── S6: ENGAGE ─────────────────────────────── */
+#s-engage{background:var(--navy)}
+.eng-inner{max-width:1100px;margin:0 auto;padding:68px 48px 72px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.eng-ey{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.eng-ey::before{content:'';display:block;width:22px;height:1px;background:var(--teal)}
+.eng-hl{font-family:var(--serif);font-size:clamp(26px,3vw,40px);color:var(--white);line-height:1.2;margin-bottom:18px}
+.eng-body{font-size:14.5px;line-height:1.8;color:rgba(255,255,255,.58);margin-bottom:36px;max-width:460px}
+.eng-ctas{display:flex;flex-direction:column;gap:10px;max-width:340px}
+.eng-note{font-size:12px;color:rgba(255,255,255,.35);line-height:1.6;margin-top:18px}
+
+.pkg-head{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:12px}
+.pkg-items{display:flex;flex-direction:column;gap:10px}
+.pkg-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px}
+.pkg-name{font-size:12.5px;font-weight:500;color:var(--white);margin-bottom:4px}
+.pkg-price{font-family:var(--serif);font-size:21px;color:var(--teal-mid);line-height:1;margin-bottom:5px}
+.pkg-desc{font-size:11.5px;line-height:1.55;color:rgba(255,255,255,.48)}
+.pkg-note{font-size:11px;color:rgba(255,255,255,.30);line-height:1.6;margin-top:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}
+
+/* ─── ECOSYSTEM BUILDERS STRIP ───────────────── */
+.eco-strip{background:var(--teal-light);border-top:1px solid var(--cream-dk);padding:48px}
+.eco-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.eco-ey{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:12px}
+.eco-hl{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);color:var(--navy);margin-bottom:12px;line-height:1.3}
+.eco-body{font-size:13.5px;line-height:1.76;color:var(--ink-mid)}
+.eco-tools{display:flex;flex-direction:column;gap:10px}
+.eco-tool{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;background:var(--white);border-radius:6px;border:1px solid var(--cream-dk)}
+.eco-tool-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:4px}
+.eco-tool-name{font-size:12px;font-weight:500;color:var(--navy);margin-bottom:2px}
+.eco-tool-desc{font-size:12px;color:var(--ink-mid);line-height:1.5}
+
+/* ─── FOOTER ─────────────────────────────────── */
+.footer{background:rgba(0,0,0,.2);padding:14px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.06);margin-top:auto;flex-shrink:0}
+.footer span{font-size:11px;color:rgba(255,255,255,.28)}
+.footer-r span{color:var(--teal-mid)}
+
+/* ─── EVIDENCE HUB ───────────────────────────── */
+#s-evidence{background:var(--cream)}
+.ev-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:48px;align-items:start}
+.ev-explainer{background:var(--navy);border-radius:8px;padding:28px}
+.ev-exp-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:10px}
+.ev-exp-hl{font-family:var(--serif);font-size:20px;color:var(--white);line-height:1.3;margin-bottom:10px}
+.ev-exp-body{font-size:13px;line-height:1.68;color:rgba(255,255,255,.58)}
+.ev-progress{display:flex;align-items:center;gap:6px;margin-bottom:28px}
+.ev-prog-dot{width:8px;height:8px;border-radius:50%;background:var(--cream-dk);transition:background .3s}
+.ev-prog-dot.done{background:var(--teal)}
+.ev-prog-dot.active{background:var(--navy);width:10px;height:10px}
+.ev-score-wrap{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.ev-score{font-family:var(--serif);font-size:48px;color:var(--navy);line-height:1}
+.ev-score-meta{font-size:12px;color:var(--ink-light);line-height:1.6}
+
+.ev-q-card{background:var(--white);border:1px solid var(--cream-dk);border-radius:10px;padding:32px;margin-bottom:20px}
+.ev-q-num{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:14px}
+.ev-q-text{font-family:var(--serif);font-size:clamp(17px,2vw,22px);color:var(--navy);line-height:1.4;margin-bottom:28px}
+.ev-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ev-opt{
+  background:var(--cream);border:1.5px solid var(--cream-dk);
+  border-radius:8px;padding:14px 16px;cursor:pointer;
+  display:flex;align-items:flex-start;gap:10px;
+  transition:border-color .2s,background .2s;text-align:left;
+  font-family:var(--sans);
+}
+.ev-opt:hover:not(:disabled){border-color:var(--navy);background:var(--white)}
+.ev-opt:disabled{cursor:default}
+.ev-opt.correct{background:var(--teal-light);border-color:var(--teal)}
+.ev-opt.wrong{background:#FEE2E2;border-color:#EF4444}
+.ev-opt.reveal{background:var(--teal-light);border-color:var(--teal);opacity:.7}
+.ev-opt-letter{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--white);border:1px solid var(--cream-dk);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:500;color:var(--ink-mid);
+  flex-shrink:0;margin-top:1px;
+}
+.ev-opt.correct .ev-opt-letter{background:var(--teal);border-color:var(--teal);color:var(--white)}
+.ev-opt.wrong .ev-opt-letter{background:#EF4444;border-color:#EF4444;color:var(--white)}
+.ev-opt-text{font-size:13.5px;color:var(--ink);line-height:1.5}
+
+.ev-reveal{
+  background:var(--navy);border-radius:8px;padding:24px;
+  margin-top:16px;display:none;
+}
+.ev-reveal.show{display:block}
+.ev-reveal-verdict{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:500;margin-bottom:12px;
+}
+.ev-verdict-badge{
+  font-size:10px;padding:3px 9px;border-radius:20px;
+  font-weight:500;letter-spacing:.04em;
+}
+.ev-verdict-badge.correct{background:rgba(29,158,117,.25);color:var(--teal-mid)}
+.ev-verdict-badge.wrong{background:rgba(239,68,68,.2);color:#FCA5A5}
+.ev-reveal-finding{font-size:14px;line-height:1.7;color:rgba(255,255,255,.78);margin-bottom:14px}
+.ev-reveal-source{
+  font-size:11.5px;color:rgba(255,255,255,.4);
+  padding-top:12px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.ev-reveal-source a{color:var(--teal-mid);text-decoration:none}
+.ev-reveal-source a:hover{text-decoration:underline}
+.ev-fosr-link{
+  margin-top:10px;font-size:12px;color:var(--teal-mid);
+  display:flex;align-items:center;gap:6px;
+}
+.ev-fosr-link::before{content:'→';font-size:11px}
+
+.ev-nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.ev-next-btn{
+  background:var(--teal);color:var(--white);border:none;
+  border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:500;
+  padding:11px 24px;cursor:pointer;transition:background .2s;
+  display:none;
+}
+.ev-next-btn.show{display:inline-block}
+.ev-next-btn:hover{background:var(--teal-dark)}
+.ev-reset-btn{
+  background:transparent;color:var(--ink-light);border:1px solid var(--cream-dk);
+  border-radius:6px;font-family:var(--sans);font-size:12px;
+  padding:9px 18px;cursor:pointer;transition:all .2s;display:none;
+}
+.ev-reset-btn.show{display:inline-block}
+.ev-reset-btn:hover{border-color:var(--ink-mid);color:var(--ink)}
+
+.ev-complete{
+  background:var(--navy);border-radius:10px;padding:40px;
+  text-align:center;display:none;
+}
+.ev-complete.show{display:block}
+.ev-complete-hl{font-family:var(--serif);font-size:28px;color:var(--white);margin-bottom:12px}
+.ev-complete-body{font-size:14px;line-height:1.7;color:rgba(255,255,255,.6);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.ev-sources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.ev-source-card{background:var(--white);border:1px solid var(--cream-dk);border-radius:8px;padding:18px}
+.ev-source-org{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px}
+.ev-source-title{font-size:12.5px;font-weight:500;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.ev-source-finding{font-size:12px;line-height:1.6;color:var(--ink-mid);margin-bottom:10px}
+.ev-source-link{font-size:11px;color:var(--teal-dark);text-decoration:none}
+.ev-source-link:hover{text-decoration:underline}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media(max-width:900px){
+  nav{padding:0 14px}
+  .nav-links button{padding:0 8px;font-size:10px}
+  .hero,.fosr-intro,.prob-grid,.ma-strip,.eng-inner,.buyer-panel.active,.eco-inner{grid-template-columns:1fr}
+  .hl,.hr{padding:40px 22px}
+  .hr{border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+  .three-col,.pillars-grid,.roles-grid,.ma-price-grid,.fosr-price-grid{grid-template-columns:1fr}
+  .si,.eng-inner{padding:44px 22px 60px}
+  .pq{padding:30px 26px}
+  .eco-strip{padding:36px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-back" title="Back to Inala Advisory" aria-label="Back to Inala Advisory">←</a>
+    <div class="nav-brand">FOSR <span>by Inala Advisory</span></div>
+  </div>
+  <div class="nav-links">
+    <button class="active" onclick="go('home')">Overview</button>
+    <button onclick="go('problem')">The problem</button>
+    <button onclick="go('fosr')">FOSR</button>
+    <button onclick="go('fits')">Where it fits</button>
+    <button onclick="go('evidence')">Evidence hub</button>
+    <button class="nav-cta" onclick="go('engage')">Get in touch</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════
+     S1 · HOME
+══════════════════════════════════════════ -->
+<section id="s-home" class="active">
+  <div class="hero">
+    <div class="hl">
+      <div class="h-eyebrow">Decision infrastructure · by Inala Advisory</div>
+      <h1 class="h-hl">A standardised structural baseline.<br><em>Decision integrity, mapped before your programme begins.</em></h1>
+      <div class="h-assess-line"><strong style="color:#fff">Standardised, behaviourally-anchored online assessment. Founders self-complete in 20 minutes.</strong> The system scores. An analyst adds the pattern statement. Where the founder consents at intake, their assigned mentor reads the report before the first session — saving 3–5 hours of discovery per founder. Built for accelerators and corporate fellowships.</div>
+      <div class="h-infra">Decision Gate Framework · proprietary diagnostic architecture</div>
+      <p class="h-body">Financial pressure doesn't create new decision patterns in a founder-led business — it reveals which structural capacities were already in place and which were not. FOSR makes those conditions visible, measurable, and actionable before the stakes of your programme or investment are already on the line.</p>
+      <div class="h-actions">
+        <button class="btn-p" onclick="go('fosr')">Explore FOSR</button>
+        <button class="btn-g" onclick="go('problem')">What programmes carry without it</button>
+      </div>
+    </div>
+    <div class="hr">
+      <div class="h-stat">
+        <div class="h-stat-n">25</div>
+        <div class="h-stat-l">Behaviourally-anchored questions. Four structural pillars. One signal that changes how your programme prepares for every cohort member.</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n">4</div>
+        <div class="h-stat-l">Decision Gate pillars mapped per entrepreneur: Financial Visibility, Signal Absorption, Behavioural Integration, Decision Alignment.</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n">5 days</div>
+        <div class="h-stat-l">Turnaround from assessment to report. Structural clarity before the first session, not after the first three.</div>
+      </div>
+      <div class="h-scope">
+        <div class="h-scope-lbl">Instrument scope</div>
+        <div class="h-scope-text">FOSR is designed for founder-led businesses — where the founder makes key strategic, financial, and operational decisions. The instrument maps the structural conditions of that specific decision layer. It is not suited to businesses with a delegated executive team where that decision layer is distributed.</div>
+      </div>
+      <div class="h-quote">
+        <p class="h-quote-t">"Financial pressure reveals exactly which structural capacities are load-bearing and which are not yet in place. FOSR makes those conditions visible before the stakes are already on the line."</p>
+        <div class="h-quote-a">Inala Advisory · Decision Gate Framework</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S2 · THE PROBLEM
+══════════════════════════════════════════ -->
+<section id="s-problem">
+  <div class="si">
+    <div class="eyebrow">The problem</div>
+    <h2 class="section-hl">Programmes invest in founders<br><em>without knowing what they carry.</em></h2>
+    <p class="section-intro">Mentors arrive at sessions without structural context. Curriculum is delivered without knowing where the cohort's financial decision-making capacity actually sits. Capital is allocated based on idea quality rather than founder decision integrity. The cost of this is measured in wasted mentor hours, misaligned curriculum, and preventable exits.</p>
+
+    <div class="prob-grid">
+      <div>
+        <div class="prob-col-head">What programmes work without</div>
+        <div class="prob-item"><div class="pi-dot n"></div><div class="pi-text"><strong>No structural baseline.</strong> Programmes assess business readiness — pitch quality, market validation, traction — but rarely the founder's capacity to make financial decisions under pressure.</div></div>
+        <div class="prob-item"><div class="pi-dot n"></div><div class="pi-text"><strong>Mentor time on discovery.</strong> The first 2–3 sessions of every mentorship engagement are spent establishing basic financial context that a structured assessment would surface in 25 questions.</div></div>
+        <div class="prob-item"><div class="pi-dot n"></div><div class="pi-text"><strong>Curriculum pitched at the wrong level.</strong> A facilitator delivering a pricing session to a cohort where 14 of 20 founders haven't yet built the habit of reading figures before deciding — that session lands in the wrong place.</div></div>
+        <div class="prob-item"><div class="pi-dot n"></div><div class="pi-text"><strong>The great ideas, weak founder challenge.</strong> In post-revenue acceleration and corporate fellowship contexts, strong ideas and weak financial decision-making capacity consistently co-exist. FOSR separates the two precisely.</div></div>
+        <div class="prob-item"><div class="pi-dot n"></div><div class="pi-text"><strong>No evidence of structural development.</strong> Without a before-and-after structural measure, programmes cannot demonstrate what changed in a founder's financial decision-making capacity as a result of their intervention.</div></div>
+      </div>
+      <div>
+        <div class="prob-col-head">What FOSR changes</div>
+        <div class="prob-item"><div class="pi-dot t"></div><div class="pi-text"><strong>A decision-infrastructure baseline before day one.</strong> Every cohort member arrives with a mapped structural signal. Mentors, facilitators, and coordinators all know what they're working with before the first session begins.</div></div>
+        <div class="prob-item"><div class="pi-dot t"></div><div class="pi-text"><strong>Mentor hours on substance, not discovery.</strong> Where the founder consents at intake to share their report with their assigned mentor, the mentor arrives at session one with pillar scores, pattern statement, and suggested probe questions — rather than starting from scratch. Typically saves 3–5 hours of basic financial discovery per founder.</div></div>
+        <div class="prob-item"><div class="pi-dot t"></div><div class="pi-text"><strong>Curriculum calibrated to cohort signal.</strong> The cohort benchmark gives facilitators a brief before every session — where the collective structural conditions sit, and how to pitch content accordingly.</div></div>
+        <div class="prob-item"><div class="pi-dot t"></div><div class="pi-text"><strong>Capital allocation evidence.</strong> For corporate fellowship contexts, FOSR provides verifiable structural signal before capital or contract exposure is increased. Risk-holders get signal, not just self-report.</div></div>
+        <div class="prob-item"><div class="pi-dot t"></div><div class="pi-text"><strong>Measurable structural development.</strong> Score Shift at exit produces a before-and-after pillar movement report. Programmes can show what structurally changed — and where their intervention had the most effect.</div></div>
+      </div>
+    </div>
+
+    <div class="pq">
+      <p class="pq-t">"FOSR strengthens the decision layer inside your existing process. Your mentors, your curriculum, your selection criteria — all stay intact. What changes is how precisely they're aimed."</p>
+      <div class="pq-a">Inala Advisory · positioning principle</div>
+    </div>
+
+    <div class="three-col">
+      <div class="ic"><div class="ic-n">01</div><div class="ic-h">Not knowledge. Not attitude. Decision capacity.</div><div class="ic-b">FOSR measures the structural conditions under which financial decisions are made in a founder-led business. A founder can know what cash flow is and still not use it to make decisions. The Decision Gate Framework maps that gap precisely.</div></div>
+      <div class="ic"><div class="ic-n">02</div><div class="ic-h">Infrastructure, not a course.</div><div class="ic-b">FOSR does not replace your curriculum, your mentors, or your selection process. It is the diagnostic layer that tells your programme what each founder carries into it — and what they've structurally built coming out.</div></div>
+      <div class="ic"><div class="ic-n">03</div><div class="ic-h">Capacity framing. Always.</div><div class="ic-b">The instrument names structural conditions, not deficits. Every report identifies a named development area and a first expansion move — not a weakness to fix, but a structural condition with room to grow.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S3 · FOSR
+══════════════════════════════════════════ -->
+<section id="s-fosr">
+  <div class="si">
+    <div class="eyebrow">The instrument</div>
+    <h2 class="section-hl">Financial-Operational Signal Review<br><em>Built on the Decision Gate Framework</em></h2>
+    <p class="section-intro"><strong style="color:var(--navy)">Founders complete FOSR themselves online in 20 minutes.</strong> 25 questions. No call, no interview, no live session. A diagnostic instrument that measures decision-making capacity under pressure — the structural conditions that determine whether decisions hold when payroll is tight, pipeline is thin, or a client asks for a discount. Consequences surface financially and operationally. Where the founder consents at intake, their assigned mentor reads the report before session one.</p>
+
+    <div class="pq" style="margin:0 0 44px;max-width:680px">
+      <p class="pq-t">"FOSR is the pathology lab. Your programme is the doctor."</p>
+      <div class="pq-a">Inala Advisory · positioning principle</div>
+    </div>
+
+    <div class="fosr-intro">
+      <div>
+        <div class="fi-body">
+          <p>The Decision Gate Framework is the proprietary architecture underlying FOSR. It operates on the principle that decision-making capacity is structural — built or unbuilt — not motivational or attitudinal. The four pillars map the conditions under which financial information enters, is processed, and influences decisions in a founder-led business. Pressure exposes which capacities are load-bearing; the consequences surface financially and operationally.</p>
+          <p>FOSR uses a non-linear scoring model where answer choice reflects structural capacity, not right or wrong. A Mindset Score is computed separately from five starred questions and determines the intervention type: Mindset Reframe, Habit Design, or Tool Introduction.</p>
+          <p>The pattern statement — analyst-written, specific to this founder's business — is what distinguishes FOSR from any automated assessment. It is the thing that makes a founder read their report and think: <em>"that is exactly my business."</em></p>
+        </div>
+        <div class="fi-scope-note">
+          <div class="fi-scope-lbl">Instrument scope · important</div>
+          <div class="fi-scope-text">FOSR is designed for founder-led businesses where the founder holds strategic, financial, and operational decision authority. The instrument maps the structural conditions of that specific decision layer. It is not suited to businesses with a delegated executive team — the decision layer is distributed and the instrument's architecture would not produce a valid signal.</div>
+        </div>
+      </div>
+      <div class="fosr-aside">
+        <div class="fa-lbl">Sample signal · illustrative</div>
+        <div class="fa-score-row"><div class="fa-score">3.1</div><div class="fa-score-l">overall score</div></div>
+        <div class="fa-p"><div class="fa-pn"><span>P1 Financial Visibility</span><span>2.8</span></div><div class="fa-track"><div class="fa-fill" style="width:56%"></div></div></div>
+        <div class="fa-p"><div class="fa-pn"><span>P2 Signal Absorption ↓</span><span>2.1</span></div><div class="fa-track"><div class="fa-fill" style="width:42%;background:#BA7517"></div></div></div>
+        <div class="fa-p"><div class="fa-pn"><span>P3 Behavioural Integration</span><span>3.4</span></div><div class="fa-track"><div class="fa-fill" style="width:68%"></div></div></div>
+        <div class="fa-p"><div class="fa-pn"><span>P4 Decision Alignment</span><span>3.2</span></div><div class="fa-track"><div class="fa-fill" style="width:64%"></div></div></div>
+        <div class="fa-band">Structurally Developing</div>
+        <div class="fa-dgf">
+          <div class="fa-dgf-l">Decision Gate Framework</div>
+          <div class="fa-dgf-t">Named development area: P2 Signal Absorption. Intervention type: Habit Design. First expansion move is specific to this founder's structural condition — not a generic recommendation.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'fosr','pillars')">The four pillars</button>
+      <button class="tab-btn" onclick="switchTab(this,'fosr','bands')">Structural bands</button>
+      <button class="tab-btn" onclick="switchTab(this,'fosr','report')">The report</button>
+      <button class="tab-btn" onclick="switchTab(this,'fosr','pricing')">Pricing</button>
+      <button class="tab-btn" onclick="switchTab(this,'fosr','next')">What's next</button>
+    </div>
+
+    <div id="fosr-pillars" class="tab-panel active">
+      <div class="pillars-grid">
+        <div class="pc p1"><div class="pc-lbl">Pillar 1 · 30% weight</div><div class="pc-name">Financial Visibility</div><div class="pc-w">Cash position · runway · revenue pattern</div><div class="pc-desc">Does the founder hold a continuous mental model of their financial position — or do they go looking when a decision forces them to? The capacity to name where the business stands, without retrieval, is the foundation of every subsequent pillar.</div></div>
+        <div class="pc p2"><div class="pc-lbl">Pillar 2 · 30% weight</div><div class="pc-name">Signal Absorption</div><div class="pc-w">Reads figures as narrative · not just records</div><div class="pc-desc">Does financial data tell the founder a story about what to do next — or does it confirm what they already sense? Reading figures as a forward signal rather than a historical record is the most common structural gap in developing founder-led businesses.</div></div>
+        <div class="pc p3"><div class="pc-lbl">Pillar 3 · 20% weight</div><div class="pc-name">Behavioural Integration</div><div class="pc-w">Financial data enters pricing · hiring · collections</div><div class="pc-desc">Does financial information actually change what the founder does — in pricing decisions, hiring timing, collections behaviour? The gap between knowing and doing is structural. FOSR maps where that gap sits and what produced it.</div></div>
+        <div class="pc p4"><div class="pc-lbl">Pillar 4 · 20% weight</div><div class="pc-name">Decision Alignment</div><div class="pc-w">Financial logic holds under pressure</div><div class="pc-desc">Does the founder's financial logic hold when the business is under stress — a large client requesting a discount, tight payroll, a dry pipeline? Pressure doesn't create new patterns. It reveals which structural capacities were embedded and which were not.</div></div>
+      </div>
+    </div>
+
+    <div id="fosr-bands" class="tab-panel">
+      <table class="bands-tbl">
+        <thead><tr><th>Band</th><th>Score</th><th>What it means</th><th>Intervention type</th></tr></thead>
+        <tbody>
+          <tr><td><span class="bp bp-absent">Structurally Absent</span></td><td>0–1.4</td><td>Financial data is largely absent from the decision-making process. Decisions proceed from intuition or necessity alone.</td><td>Mindset Reframe — the founder's relationship with financial information is the first structural condition to address.</td></tr>
+          <tr><td><span class="bp bp-weak">Structurally Weak</span></td><td>1.5–2.4</td><td>Financial information is accessed inconsistently and rarely used to revise decisions already in motion.</td><td>Habit Design — building the structural routines that connect financial data to decisions.</td></tr>
+          <tr><td><span class="bp bp-dev">Structurally Developing</span></td><td>2.5–3.4</td><td>A working financial foundation is present. Some pillars are solid; one or two have significant room to grow.</td><td>Tool Introduction — the structural foundation is ready for specific financial tools and frameworks.</td></tr>
+          <tr><td><span class="bp bp-sound">Structurally Sound</span></td><td>3.5–4.4</td><td>Financial decision-making is consistent and responsive. Data informs decisions across most operational areas.</td><td>Refinement — precision work on the remaining pillar conditions.</td></tr>
+          <tr><td><span class="bp bp-embed">Structurally Embedded</span></td><td>4.5–5.0</td><td>Financial logic is structurally embedded across all four pillars. Decisions hold under pressure.</td><td>Stretch capacity — this founder is ready for the most demanding programme components.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="fosr-report" class="tab-panel">
+      <div class="three-col">
+        <div class="ic"><div class="ic-h">Pattern statement</div><div class="ic-b">Analyst-written. Specific to this founder's business. Specific enough that the founder reads it and thinks "that is exactly my business." Not templatable. Not generated from a library. Written by a diagnostics analyst who has read every answer.</div></div>
+        <div class="ic"><div class="ic-h">Four pillar scores + Mindset Score</div><div class="ic-b">Each pillar scored individually on the Decision Gate Framework weighting. The Mindset Score is reported separately — it determines whether the intervention priority is the founder's relationship with financial information, structural habits, or specific tools.</div></div>
+        <div class="ic"><div class="ic-h">Named development area + first expansion move</div><div class="ic-b">The lowest-weighted pillar is the named development area — not a weakness, a structural condition with room to grow. The first expansion move is concrete and specific to this founder's business. Not a generic recommendation.</div></div>
+        <div class="ic"><div class="ic-h">Risk flags (up to 3)</div><div class="ic-b">Up to three structural risk flags written in plain language specific to this founder's context — Pricing Floor Uncertainty, Founder Subsidy, Survival Constraint, Emotive Avoidance, among others. Never generic library text.</div></div>
+        <div class="ic"><div class="ic-h">Cohort benchmark report</div><div class="ic-b">Aggregate cohort signal — pillar distribution, band breakdown, flag frequency, and a curriculum brief for facilitators. Included in Cohort package and above. Gives programme coordinators a cohort-level picture alongside individual reports. Ships with Interpretation Notes — written guidance on how to read the findings.</div></div>
+        <div class="ic"><div class="ic-h">Score Shift at exit</div><div class="ic-b">Re-assessment at programme completion produces a before-and-after pillar movement report per founder and cohort aggregate. For the first time, programmes can show what structural capacity changed — and where their intervention had the most effect.</div></div>
+      </div>
+
+      <div style="margin-top:30px;background:var(--cream);border:1px solid var(--cream-dk);border-radius:8px;padding:26px 30px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:14px">Delivery &amp; access · how reports reach the people who need them</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px">
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:6px">Individual reports belong to the founder</div>
+            <div style="font-size:12.5px;line-height:1.68;color:var(--ink-mid);margin-bottom:14px">The founder owns the report the instrument produces about their business. At intake, the founder is asked whether they consent to sharing the report with their assigned mentor — this is the mechanism by which the Mentorship Efficiency Credit is realised. Consent is per founder and can be withdrawn. Without consent, the report stays with the founder only. This separation is what keeps the instrument measuring honestly — founders answer differently when they know the report is theirs, not a gatekeeping input.</div>
+            <div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:6px">Cohort-level reports reach programme partners</div>
+            <div style="font-size:12.5px;line-height:1.68;color:var(--ink-mid)">Cohort benchmarks, flag distributions, and Score Shift aggregates are delivered to programme partners in anonymised form. Individual data does not flow up; cohort-level data does. This preserves the integrity of both layers.</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:6px">Interpretation Notes ship with every cohort-level report</div>
+            <div style="font-size:12.5px;line-height:1.68;color:var(--ink-mid);margin-bottom:14px">Each cohort snapshot is delivered with written Interpretation Notes — structured guidance on how to read the pillar distribution, where pressure conditions cluster, and what the signal implies for curriculum and mentor-pairing decisions. The snapshot is designed to be read without live interpretation, which is what makes the signal comparable across cohorts and markets.</div>
+            <div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:6px">Written Q&amp;A window &middot; live debrief optional</div>
+            <div style="font-size:12.5px;line-height:1.68;color:var(--ink-mid)">A 14-day written Q&amp;A window follows each cohort-level delivery at Cohort tier and above. Programme partners submit questions in writing; responses are returned in writing within three working days. A live debrief is available as an optional add-on at any tier — see Pricing for structure.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fosr-pricing" class="tab-panel">
+      <div class="fosr-price-grid" style="grid-template-columns:minmax(0,520px);justify-content:center">
+        <div class="fpc feat">
+          <div class="fpc-tag" style="background:var(--navy);color:var(--white)">Entry point · for now, the only public offer</div>
+          <div class="fpc-name">Pilot</div>
+          <div class="fpc-price">R19,500</div>
+          <div style="font-size:11.5px;color:var(--ink-light);letter-spacing:.02em;margin:-2px 0 6px">USD 1,300 · international buyers</div>
+          <div class="fpc-unit">Up to 10 entrepreneurs · Level 1B auto-report · credited on upgrade</div>
+          <div class="fpc-items">
+            <div class="fpc-item"><div class="fpc-dot"></div>Individual FOSR report per entrepreneur (up to 10)</div>
+            <div class="fpc-item"><div class="fpc-dot"></div>Each report includes: band, four pillar scores, Mindset Score, intervention type, auto-generated pattern statement, response time metadata</div>
+            <div class="fpc-item"><div class="fpc-dot"></div>Programme-administered intake via Tally link · founder consent to share with mentor captured at intake</div>
+            <div class="fpc-item"><div class="fpc-dot"></div>Full R19,500 credited against Cohort (R65,000) or Partnership engagement within 90 days of delivery</div>
+          </div>
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--cream-dk);font-size:11.5px;color:var(--ink-light);line-height:1.6">
+            <strong style="color:var(--ink-mid);font-weight:500">Not included in the Pilot:</strong> analyst-written pattern statements (Level 1A · +R1,700/entrepreneur), cohort benchmark report with Interpretation Notes (+R4,500), exit Score Shift re-assessment (+R950/entrepreneur), live programme debrief (+R5,500 · structure below). All available as add-ons or included in Cohort and above.
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width:720px;margin:28px auto 0;background:var(--cream);border:1px solid var(--cream-dk);border-radius:8px;padding:24px 28px">
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:10px">Live debrief · optional add-on · R5,500 &middot; USD 370 international</div>
+        <div style="font-size:13.5px;font-weight:500;color:var(--navy);margin-bottom:10px;line-height:1.4">60-minute structured session with your programme team, delivered by an Inala analyst.</div>
+        <div style="font-size:12.5px;line-height:1.68;color:var(--ink-mid);margin-bottom:14px">Available at every tier as an optional synchronous layer on top of the written cohort snapshot and Interpretation Notes. Designed for programme teams who want to walk the signal together rather than read it asynchronously.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;font-size:12px;line-height:1.6;color:var(--ink-mid)">
+          <div>
+            <div style="font-weight:500;color:var(--navy);margin-bottom:4px">What it covers</div>
+            <div>&middot; Walk-through of cohort benchmark · pillar distribution · band breakdown · flag clustering</div>
+            <div>&middot; Pattern observations — where pressure conditions cluster across the cohort</div>
+            <div>&middot; Reading Score Shift (where exit re-assessment included)</div>
+            <div>&middot; Curriculum and mentor-pairing implications</div>
+            <div>&middot; Q&amp;A with your programme team</div>
+          </div>
+          <div>
+            <div style="font-weight:500;color:var(--navy);margin-bottom:4px">What it does not cover</div>
+            <div>&middot; Individual founder reports — these remain confidential to the founder</div>
+            <div>&middot; Programme design consulting beyond the instrument signal</div>
+            <div>&middot; Bespoke strategic recommendations</div>
+            <div style="font-weight:500;color:var(--navy);margin-top:10px;margin-bottom:4px">Format</div>
+            <div>&middot; Video call · up to 5 programme team participants · pre-read required (snapshot and Interpretation Notes delivered 5 working days prior) · no additional written deliverable</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="price-note">Milestone invoicing: 30% on agreement (non-refundable once onboarding begins) · 40% on deployment (Tally link live) · 30% on final report delivery. The Mentorship Efficiency Credit: a 10-entrepreneur Pilot saves 20–30 hours of basic financial discovery time across your mentors — the instrument pays for itself before the first session begins. All pricing excludes VAT.</p>
+      <p class="price-note" style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--cream-dk)">Larger engagements — Cohort (R65,000 · USD 4,400), Partnership (R120,000/year · USD 8,100/yr), plus Starter and Professional bundles that integrate the coming FOSR Pulse mentor layer — exist and are shared in conversation once we understand the shape of your programme. At Cohort tier and above, cohort benchmark reports ship with Interpretation Notes and a 14-day written Q&amp;A window included as standard; live debrief remains optional. <a href="pricing-architecture.html" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px">See the full pricing architecture →</a> · International buyers: USD pricing includes a 10% cross-border uplift covering FX spread, SWIFT, and receiving-bank costs.</p>
+    </div>
+
+    <div id="fosr-next" class="tab-panel">
+      <p class="section-intro" style="margin-bottom:32px">FOSR today is the 25-question instrument, the individual reports, and the cohort benchmark. What sits beyond it is architecture that extends the signal across the programme cycle — sequenced so each layer strengthens the one before it.</p>
+      <div class="three-col" style="grid-template-columns:repeat(2,1fr);max-width:760px">
+        <div class="ic" style="border-color:var(--teal);background:rgba(29,158,117,.04)">
+          <div class="ic-phase" style="color:var(--teal)">Coming 2026</div>
+          <div class="ic-h">FOSR Pulse</div>
+          <div class="ic-b">The layer that keeps the FOSR signal live across the programme cycle. Session prep anchored to pillar profile, private mentor notes filed by pillar, programme coordinator dashboards for cohort visibility and session integrity. Currently in build.</div>
+        </div>
+        <div class="ic">
+          <div class="ic-phase">Planned</div>
+          <div class="ic-h">Pre-Revenue Instrument</div>
+          <div class="ic-b">A companion 25-question instrument for founder-led businesses in the planning and preparation phase — same Decision Gate Framework, same scoring architecture, different structural conditions. Trading and profitability are treated as distinct milestones.</div>
+        </div>
+      </div>
+      <p class="price-note" style="font-style:italic;margin-top:22px">"The Pilot is a full diagnostic engagement in its own right — not a trial. The rest of the roadmap exists because measurement quality improves when the instrument stays with the cohort across the programme." — Inala Advisory · product principle</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S4 removed — roadmap now nests inside FOSR as 'What's next' tab
+══════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════
+     S5 · WHERE IT FITS
+══════════════════════════════════════════ -->
+<section id="s-fits">
+  <div class="si">
+    <div class="eyebrow">Where it fits</div>
+    <h2 class="section-hl">Built for programmes that take<br><em>founder development seriously.</em></h2>
+    <p class="section-intro">FOSR is decision infrastructure — not a replacement for your mentors, your curriculum, or your selection criteria. It strengthens the decision layer inside your existing process. Your programme stays intact. What changes is how precisely it's aimed.</p>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchBuyer(this,'accelerator')">Accelerators</button>
+      <button class="tab-btn" onclick="switchBuyer(this,'fellowship')">Corporate fellowships</button>
+    </div>
+
+    <div class="buyer-panels">
+      <div id="buyer-accelerator" class="buyer-panel active">
+        <div>
+          <div class="bp-hl">Accelerators investing in post-revenue founders</div>
+          <p class="bp-body">Your cohort members have revenue, traction, and market signal. What the application process doesn't tell you is whether the founder has the structural financial capacity to scale — or whether the growth you're about to accelerate will expose a decision-making gap the business isn't built to survive.</p>
+          <p class="bp-body">FOSR maps that structural condition before the programme begins. Not as a selection filter — as a development baseline. You know what each founder is carrying into your cohort, and your mentors know what to address from session one.</p>
+          <div class="bp-voice"><div class="bp-v-lbl">The challenge this addresses</div><div class="bp-v-t">"We had excellent founders who struggled the moment growth created financial complexity. FOSR would have told us which structural conditions to address before we accelerated them into situations they weren't structurally ready for."</div></div>
+          <div class="bpi-lbl">Where FOSR fits in your process</div>
+          <div class="bpi-items">
+            <div class="bpi-item"><div class="bpi-dot"></div>Post-selection, pre-programme — baseline before cohort begins</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>Mentor briefing — with founder consent at intake, assigned mentors receive the signal before their first session</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>Curriculum calibration — facilitators brief from cohort aggregate signal</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>Exit re-assessment — Score Shift shows structural capacity change per founder</div>
+          </div>
+        </div>
+        <div>
+          <div class="bp-wyg"><div class="bp-wyg-l">What your programme receives at full engagement</div><div class="bp-wyg-items">
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Individual FOSR reports — pattern statement, pillar scores, intervention type, risk flags specific to each founder</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Cohort benchmark — pillar distribution and band breakdown across your intake</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Curriculum brief for technical advisors — calibrated to cohort structural signal</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Score Shift at exit — before-and-after pillar movement per founder and cohort aggregate</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Cohort snapshots with Interpretation Notes — structured written guidance on how to read the signal; 14-day written Q&amp;A window follows each delivery</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Live debrief · optional add-on — 60-minute structured session with your programme team (see Pricing for structure)</div></div>
+          </div></div>
+          <div class="bp-pn"><div class="bp-pn-l">Entry point</div><div class="bp-pn-p">R19,500</div><div class="bp-pn-u">Pilot · up to 10 founders · Level 1B auto-reports</div><div class="bp-pn-n">One upcoming intake. Individual auto-reports (band, pillar scores, intervention type, auto pattern statement) per founder. Cohort benchmark with Interpretation Notes, analyst pattern statements, and exit Score Shift sit at Cohort level; live debrief is an optional add-on at any tier — R19,500 is credited in full against that upgrade within 90 days.</div></div>
+        </div>
+      </div>
+
+      <div id="buyer-fellowship" class="buyer-panel">
+        <div>
+          <div class="bp-hl">Corporate fellowships reporting structural outcomes, not outputs</div>
+          <p class="bp-body">Fellowship programmes face a credibility question that cohort programmes don't: what did this investment structurally produce? Training certificates answer the question of attendance. FOSR answers the question of structural change — and does so in a form that supports ESG impact reporting and pan-African programme evidence.</p>
+          <p class="bp-body">The fellowship report tier includes an ESG Impact Statement mapping structural capacity change to investable development evidence. For corporate social investment desks operating in a high credibility economy, this is the difference between reporting outputs and reporting outcomes.</p>
+          <div class="bp-voice"><div class="bp-v-lbl">The challenge this addresses</div><div class="bp-v-t">"Our fellows completed the programme. We could report hours, modules, mentors. What we couldn't report was what structurally changed in their financial decision-making. That is what FOSR gives us."</div></div>
+          <div class="bpi-lbl">Where FOSR fits in your fellowship process</div>
+          <div class="bpi-items">
+            <div class="bpi-item"><div class="bpi-dot"></div>Fellow intake — structural baseline at programme start</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>Exit assessment — Score Shift produces before-and-after structural evidence per fellow</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>ESG reporting — Impact Statement maps capacity change to investment evidence</div>
+            <div class="bpi-item"><div class="bpi-dot"></div>Country segmentation for pan-African programme reporting</div>
+          </div>
+        </div>
+        <div>
+          <div class="bp-wyg"><div class="bp-wyg-l">What your fellowship receives at full engagement</div><div class="bp-wyg-items">
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Level 1A reports — analyst-written, bespoke to each fellow's structural conditions</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Score Shift at exit — before-and-after structural capacity change per fellow</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">ESG Impact Statement — maps structural capacity change to investable development evidence for CSI reporting</div></div>
+            <div class="bp-wyg-item"><div class="bp-wyg-dot"></div><div class="bp-wyg-t">Country segmentation for pan-African programmes — cohort aggregate by region</div></div>
+          </div></div>
+          <div class="bp-pn"><div class="bp-pn-l">Entry point</div><div class="bp-pn-p">R19,500</div><div class="bp-pn-u">Pilot · up to 10 fellows · Level 1B auto-reports</div><div class="bp-pn-n">One upcoming fellow intake. Auto-reports per fellow with band, pillar scores, intervention type, and auto pattern statement. Analyst-written reports, exit Score Shift, ESG Impact Statement, and country segmentation are part of the full engagement. R19,500 is credited in full against that upgrade within 90 days.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S6 removed — Free Tools section retired from public site; content preserved in version history if needed
+══════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════
+     S7 · ENGAGE
+══════════════════════════════════════════ -->
+<section id="s-engage">
+  <div class="eng-inner">
+    <div>
+      <div class="eng-ey">Get in touch</div>
+      <h2 class="eng-hl">Start with a conversation,<br>not a contract.</h2>
+      <p class="eng-body">Every engagement begins with understanding what your programme is carrying and where a structural diagnostic signal would change how you work. There is no standard pitch. The conversation determines what makes sense.</p>
+
+      <div class="eng-ctas">
+        <a href="mailto:siphiwe@inalaadvisory.com?subject=FOSR%20Enquiry" class="btn-email">Send an email →</a>
+        <a href="https://wa.me/27637148225?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20FOSR" class="btn-wa" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Message on WhatsApp
+        </a>
+        <button class="btn-g" onclick="go('fosr')" style="text-align:left">Review FOSR instrument first</button>
+      </div>
+      <div class="eng-note">South Africa · globally deployable</div>
+    </div>
+
+    <div>
+      <div class="pkg-head">Package overview</div>
+      <div class="pkg-items">
+        <div class="pkg-card"><div class="pkg-name">Pilot · FOSR</div><div class="pkg-price">R19,500 <span style="font-size:11px;color:rgba(255,255,255,.45);font-weight:400">· USD 1,300 international</span></div><div class="pkg-desc">Up to 10 entrepreneurs. Level 1B auto-reports (band, pillar scores, intervention type, auto pattern statement, response metadata) per entrepreneur. Fully credited against a larger engagement within 90 days.</div></div>
+        <div class="pkg-note" style="margin-top:6px">The Pilot is currently the only publicly listed offer. Larger engagements (Cohort R65,000 / USD 4,400 · Partnership R120,000/year / USD 8,100/yr · Starter and Professional bundles integrating the coming FOSR Pulse mentor layer) are shared in conversation once we understand the shape of your programme. At Cohort tier and above, cohort snapshots ship with Interpretation Notes and a 14-day written Q&amp;A window included as standard; live debrief (60-min structured session · R5,500 / USD 370) remains an optional add-on at every tier. <a href="pricing-architecture.html" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px">See the full pricing architecture →</a></div>
+        <div class="pkg-note">All pricing excludes VAT. Milestone invoicing: 30% on agreement (non-refundable once onboarding begins) · 40% on deployment (Tally link live) · 30% on final report delivery. International buyers: USD pricing includes a 10% cross-border uplift covering FX spread, SWIFT, and receiving-bank costs · Net 30 per milestone · SWIFT "OUR" · buyer grosses up any applicable withholding tax.</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span>© 2026 Inala Advisory (Pty) Ltd · FOSR by Inala Advisory</span>
+    <span class="footer-r"><span>100% Black-owned · Johannesburg</span></span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S8 · EVIDENCE HUB
+══════════════════════════════════════════ -->
+<section id="s-evidence">
+  <div class="si">
+    <div class="eyebrow">Evidence hub</div>
+    <h2 class="section-hl">What the research says<br><em>about founder-led business failure.</em></h2>
+    <p class="section-intro">Six questions. Real findings. Cited sources. FOSR's positioning as decision infrastructure is grounded in a consistent body of research on why founder-led businesses fail, scale poorly, or exit programmes without structural change. Test what you already believe.</p>
+
+    <div class="ev-intro">
+      <div>
+        <div class="ev-explainer">
+          <div class="ev-exp-lbl">How this works</div>
+          <div class="ev-exp-hl">Not a quiz. An evidence navigator.</div>
+          <div class="ev-exp-body">Each question presents a proposition about founder-led businesses. Select what you believe is most accurate. The platform reveals the research finding, the source, and what FOSR measures that directly addresses it. No scoring judgment — just signal on where the evidence sits versus conventional programme assumptions.</div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--white);border:1px solid var(--cream-dk);border-radius:8px;padding:24px">
+          <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:14px">Research sources used</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>World Bank Group — SME Finance &amp; MSME development research</div>
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>Kauffman Foundation — founder capability and scale failure studies</div>
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>IFC / World Bank — financial management capacity in SMEs</div>
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>Stats SA — SMME survival and failure data</div>
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>Harvard Business Review — founder decision-making under financial stress</div>
+            <div style="font-size:12.5px;color:var(--ink-mid);display:flex;gap:8px"><span style="color:var(--teal);flex-shrink:0">·</span>Endeavor Insight — what separates scale-up founders from those who plateau</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="ev-quiz-wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div class="ev-progress" id="ev-dots"></div>
+        <div id="ev-score-display" style="font-size:12px;color:var(--ink-light)"></div>
+      </div>
+      <div id="ev-q-card" class="ev-q-card">
+        <div class="ev-q-num" id="ev-q-num"></div>
+        <div class="ev-q-text" id="ev-q-text"></div>
+        <div class="ev-options" id="ev-opts"></div>
+        <div class="ev-reveal" id="ev-reveal">
+          <div class="ev-reveal-verdict" id="ev-verdict"></div>
+          <div class="ev-reveal-finding" id="ev-finding"></div>
+          <div class="ev-reveal-source" id="ev-source"></div>
+          <div class="ev-fosr-link" id="ev-fosr-link"></div>
+        </div>
+      </div>
+      <div class="ev-nav-row">
+        <button class="ev-reset-btn" id="ev-reset" onclick="evReset()">Start again</button>
+        <button class="ev-next-btn" id="ev-next" onclick="evNext()">Next question →</button>
+      </div>
+    </div>
+
+    <div class="ev-complete" id="ev-complete">
+      <div class="ev-complete-hl" id="ev-complete-hl"></div>
+      <p class="ev-complete-body" id="ev-complete-body"></p>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button class="btn-p" onclick="evReset()">Go again</button>
+        <button class="btn-p" style="background:var(--navy)" onclick="go('fosr')">Explore FOSR →</button>
+      </div>
+    </div>
+
+    <div style="margin-top:48px">
+      <div class="eyebrow" style="margin-bottom:18px">Source library</div>
+      <div class="ev-sources-grid">
+        <div class="ev-source-card"><div class="ev-source-org">World Bank Group</div><div class="ev-source-title">MSME Finance Gap — Assessment of shortfalls and opportunities</div><div class="ev-source-finding">Financial management capacity gaps — not capital access — are cited as the primary constraint on MSME development in emerging markets. Over 65% of formal SMEs are unserved due to perceived capacity risk.</div><a class="ev-source-link" href="https://www.ifc.org/en/insights-reports/2017/msme-finance-gap" target="_blank" rel="noopener">Read the report →</a></div>
+        <div class="ev-source-card"><div class="ev-source-org">Kauffman Foundation</div><div class="ev-source-title">Founder Capability Research — 5-year survival predictors</div><div class="ev-source-finding">Founder financial decision-making quality is a stronger predictor of 5-year survival than initial capitalisation or market size. Capitalised businesses with founders who couldn't make sound decisions under pressure failed at similar rates to undercapitalised ones.</div><a class="ev-source-link" href="https://www.kauffman.org/research/" target="_blank" rel="noopener">Kauffman research →</a></div>
+        <div class="ev-source-card"><div class="ev-source-org">Stats SA</div><div class="ev-source-title">South African SMME Sector — Survival and Growth Patterns</div><div class="ev-source-finding">~70–75% of South African SMMEs fail within five years. In post-revenue businesses (years 3–5), financial decision-making failure — not market failure — is the most frequently cited cause in retrospective founder surveys.</div><a class="ev-source-link" href="https://www.statssa.gov.za" target="_blank" rel="noopener">Stats SA →</a></div>
+        <div class="ev-source-card"><div class="ev-source-org">Harvard Business Review</div><div class="ev-source-title">Why Founders Fail to Scale — The Decision-Making Gap</div><div class="ev-source-finding">Founders who struggle to scale are rarely under-skilled in their domain. The consistent gap is in using financial data to revise decisions already in motion. This capacity does not improve through knowledge transfer alone — it requires structural habit formation.</div><a class="ev-source-link" href="https://hbr.org/2021/02/why-some-startups-beat-the-odds" target="_blank" rel="noopener">HBR →</a></div>
+        <div class="ev-source-card"><div class="ev-source-org">Endeavor Insight</div><div class="ev-source-title">What High-Growth Founders Do Differently</div><div class="ev-source-finding">Scale-up founders use financial data to challenge their own assumptions and revise decisions proactively. Plateau founders use financial data retrospectively — to confirm, not revise. Same review frequency. Different structural function.</div><a class="ev-source-link" href="https://endeavor.org/insight/" target="_blank" rel="noopener">Endeavor Insight →</a></div>
+        <div class="ev-source-card"><div class="ev-source-org">IFC / World Bank</div><div class="ev-source-title">SME Competitiveness Outlook — Financial Management Capacity</div><div class="ev-source-finding">Programmes using a structured financial capacity baseline at intake show measurably higher completion rates and lower dropout. The baseline changes how mentors deploy their time from session one — redirecting hours from discovery to substance.</div><a class="ev-source-link" href="https://www.ifc.org/en/insights-reports" target="_blank" rel="noopener">IFC reports →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<script>
+const navBtns = document.querySelectorAll('.nav-links button:not(.nav-cta)');
+const ids = ['home','problem','fosr','mentor','fits','eco','evidence','engage'];
+
+function go(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const i=ids.indexOf(id);
+  if(i>=0&&i<navBtns.length) navBtns[i].classList.add('active');
+}
+function switchTab(btn,group,panel){
+  btn.closest('.tab-nav').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['pillars','bands','report','pricing','next'].forEach(p=>{const el=document.getElementById(group+'-'+p);if(el)el.classList.remove('active')});
+  document.getElementById(group+'-'+panel).classList.add('active');
+}
+function switchBuyer(btn,id){
+  btn.closest('.tab-nav').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.buyer-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('buyer-'+id).classList.add('active');
+}
+
+const EV_Q=[
+  {q:"Most founder-led businesses that fail post-revenue do so because of market failure — the product or service didn't find demand.",opts:["True — market fit is the dominant cause of post-revenue failure","Partially true — market and operational failure share equal weight","False — financial decision-making failure is more commonly cited than market failure in post-revenue exits","Insufficient data exists to make this claim reliably"],correct:2,verdict:"The research is consistent here.",finding:"In post-revenue South African SMMEs (years 3–5), financial decision-making failure — not market failure — is the most frequently cited cause in retrospective founder surveys. The business had demand. The founder couldn't financially manage the growth. Stats SA SMME data and World Bank MSME research both point to this pattern consistently.",source:"Stats SA SMME Sector Report · World Bank MSME Finance Gap (2017)",sourceUrl:"https://www.statssa.gov.za",fosr:"FOSR's four pillars map the structural conditions under which financial decisions fail in growing businesses — not why the market rejected the product."},
+  {q:"Financial literacy training — teaching founders what cash flow, margin, and runway mean — measurably improves financial decision-making in founder-led businesses.",opts:["True — knowledge is the primary lever for improving financial decisions","True for early-stage founders but not post-revenue businesses","False — knowledge transfer alone does not change structural decision-making habits","The evidence is mixed and context-dependent"],correct:2,verdict:"This is one of the most consistent findings in the field.",finding:"HBR research and IFC programme data both confirm: founders who struggle with financial decision-making under pressure are rarely uninformed. They know what cash flow is. The structural gap is in using financial data to revise decisions already in motion — a capacity that doesn't change through knowledge transfer. It requires structural habit formation.",source:"Harvard Business Review — Why Founders Fail to Scale (2021) · IFC SME Competitiveness Outlook",sourceUrl:"https://hbr.org/2021/02/why-some-startups-beat-the-odds",fosr:"This is precisely why FOSR measures structural capacity — not knowledge, not attitude. The Decision Gate Framework maps whether financial data actually enters the decision-making process."},
+  {q:"The most important predictor of a founder-led business surviving beyond 5 years is the initial amount of capital raised or available.",opts:["True — capitalisation determines survival runway","Partially true — capital matters most in the first 18 months","False — founder financial decision-making quality is a stronger predictor than initial capitalisation","True, but only in markets with limited follow-on capital"],correct:2,verdict:"Capital matters. Decision capacity matters more.",finding:"Kauffman Foundation research found that founder financial decision-making quality — specifically the capacity to model cash flow and price correctly under pressure — is a stronger predictor of 5-year survival than initial capitalisation or market size. Capitalised businesses with founders who couldn't make sound financial decisions failed at similar rates to undercapitalised businesses.",source:"Kauffman Foundation — Founder Capability Research",sourceUrl:"https://www.kauffman.org/research/",fosr:"FOSR's P4 (Decision Alignment) measures whether financial logic holds under pressure — the exact condition Kauffman identifies as the key survival differentiator."},
+  {q:"Scale-up founders and plateau founders use financial data differently. The primary difference is how frequently they review their finances.",opts:["True — high-frequency financial review is the distinguishing habit","Partially true — frequency matters but so does the depth of analysis","False — the primary difference is how they use data, not how often they look at it","False — the difference is in the tools they use, not their behaviour"],correct:2,verdict:"Frequency is not the variable. Use is.",finding:"Endeavor Insight research found the distinguishing structural habit is not how often founders review finances but what they do with the data. Scale-up founders use financial data to challenge their own operational assumptions and revise decisions proactively. Plateau founders use it retrospectively — to confirm what they already believed. Same review frequency. Different structural function.",source:"Endeavor Insight — What High-Growth Founders Do Differently",sourceUrl:"https://endeavor.org/insight/",fosr:"FOSR's P2 (Signal Absorption) maps this exact distinction — whether financial data functions as a forward signal that revises decisions or a historical record that confirms existing intuitions."},
+  {q:"Programmes that include a structured financial capacity baseline at intake produce better outcomes than those that rely on the mentor to establish financial context in early sessions.",opts:["True — baseline data changes how mentors work from the first session","Probably true but the evidence base is thin","Uncertain — it depends on mentor quality more than process design","False — experienced mentors adapt quickly and don't need pre-assessment data"],correct:0,verdict:"The data supports this clearly.",finding:"IFC/World Bank programme data shows that programmes using a structured financial capacity baseline at intake demonstrate measurably higher completion rates and lower early dropout. The mechanism: the baseline changes how mentors deploy their time from session one. Instead of spending 2–3 sessions on financial context discovery, they engage directly with the structural conditions that need work.",source:"IFC / World Bank — SME Competitiveness Outlook",sourceUrl:"https://www.ifc.org/en/insights-reports",fosr:"The Mentorship Efficiency Credit is FOSR's framing of this finding: the instrument saves 3–5 hours of basic financial discovery per cohort member — R45,000–R75,000 of mentor time redirected to substance for a 20-member cohort."},
+  {q:"In accelerator and corporate fellowship contexts, financial management capacity problems in participating businesses are best addressed by increasing access to financial tools and software.",opts:["True — tool access is the primary gap in founder financial management","True for larger businesses but not micro-enterprises","False — structural decision-making capacity must precede tool introduction or tools go unused","Uncertain — it depends on the sector and programme stage"],correct:2,verdict:"Tools without structural capacity are shelf-ware.",finding:"World Bank MSME Finance Gap research and IFC field data consistently show: financial tools deployed to businesses without the structural capacity to use them are adopted poorly and abandoned quickly. The intervention sequence matters. Structural habit formation first — then tools. Deploying accounting software to a founder who doesn't yet use financial data to revise decisions produces a well-organised record of decisions that were made on instinct.",source:"World Bank MSME Finance Gap (2017) · IFC Financial Management Capacity Research",sourceUrl:"https://www.ifc.org/en/insights-reports/2017/msme-finance-gap",fosr:"FOSR's intervention type logic is built on this finding. Tool Introduction is only the right path for founders already at Structurally Developing or above. Deploying tools to a Structurally Weak founder is the sequencing error this research documents."}
+];
+
+let evC=0,evS=0,evA=false;
+
+function evBuild(){
+  const q=EV_Q[evC];
+  document.getElementById('ev-q-num').textContent=`Question ${evC+1} of ${EV_Q.length}`;
+  document.getElementById('ev-q-text').textContent=q.q;
+  const letters=['A','B','C','D'];
+  document.getElementById('ev-opts').innerHTML=q.opts.map((o,i)=>`<button class="ev-opt" onclick="evAnswer(${i})"><span class="ev-opt-letter">${letters[i]}</span><span class="ev-opt-text">${o}</span></button>`).join('');
+  document.getElementById('ev-reveal').classList.remove('show');
+  document.getElementById('ev-next').classList.remove('show');
+  document.getElementById('ev-reset').classList.remove('show');
+  evA=false;
+  document.getElementById('ev-dots').innerHTML=EV_Q.map((_,i)=>`<div class="ev-prog-dot${i<evC?' done':i===evC?' active':''}"></div>`).join('');
+  document.getElementById('ev-score-display').textContent=evC>0?`${evS} of ${evC} correct`:'';
+}
+
+function evAnswer(idx){
+  if(evA)return;
+  evA=true;
+  const q=EV_Q[evC];
+  document.querySelectorAll('.ev-opt').forEach(o=>o.disabled=true);
+  const ok=idx===q.correct;
+  if(ok)evS++;
+  document.querySelectorAll('.ev-opt')[idx].classList.add(ok?'correct':'wrong');
+  if(!ok)document.querySelectorAll('.ev-opt')[q.correct].classList.add('reveal');
+  document.getElementById('ev-verdict').innerHTML=`<span class="ev-verdict-badge ${ok?'correct':'wrong'}">${ok?'Correct':'Not quite'}</span><span style="color:rgba(255,255,255,.7);font-size:13px">${q.verdict}</span>`;
+  document.getElementById('ev-finding').textContent=q.finding;
+  document.getElementById('ev-source').innerHTML=`<span>Source:</span> <a href="${q.sourceUrl}" target="_blank" rel="noopener">${q.source}</a>`;
+  document.getElementById('ev-fosr-link').textContent=q.fosr;
+  document.getElementById('ev-reveal').classList.add('show');
+  document.getElementById('ev-next').classList.add('show');
+  document.getElementById('ev-next').textContent=evC<EV_Q.length-1?'Next question →':'See results →';
+  document.getElementById('ev-score-display').textContent=`${evS} of ${evC+1} correct`;
+}
+
+function evNext(){
+  if(evC<EV_Q.length-1){evC++;evBuild();}else{evFinish();}
+}
+
+function evFinish(){
+  document.getElementById('ev-q-card').style.display='none';
+  document.getElementById('ev-next').classList.remove('show');
+  document.getElementById('ev-dots').style.display='none';
+  document.getElementById('ev-score-display').style.display='none';
+  const pct=Math.round((evS/EV_Q.length)*100);
+  let hl,body;
+  if(pct>=83){hl=`${evS} of ${EV_Q.length} — you read the research.`;body="You're already working from a framework that aligns with the evidence. FOSR is built to operationalise exactly what this research points to.";}
+  else if(pct>=50){hl=`${evS} of ${EV_Q.length} — the evidence challenges conventional assumptions.`;body="Some of these findings run counter to how most programmes are designed. That gap between what research shows and how programmes operate is the problem FOSR is built to close.";}
+  else{hl=`${evS} of ${EV_Q.length} — this is why FOSR exists.`;body="The research on founder-led business failure is consistent and largely counter-intuitive. FOSR's Decision Gate Framework is built specifically on these findings.";}
+  document.getElementById('ev-complete-hl').textContent=hl;
+  document.getElementById('ev-complete-body').textContent=body;
+  document.getElementById('ev-complete').classList.add('show');
+  document.getElementById('ev-reset').classList.add('show');
+}
+
+function evReset(){
+  evC=0;evS=0;evA=false;
+  document.getElementById('ev-q-card').style.display='';
+  document.getElementById('ev-dots').style.display='';
+  document.getElementById('ev-score-display').style.display='';
+  document.getElementById('ev-complete').classList.remove('show');
+  evBuild();
+}
+
+document.addEventListener('DOMContentLoaded',evBuild);
+</script>
+</body>
+</html>
